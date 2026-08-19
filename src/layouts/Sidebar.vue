@@ -1,684 +1,26 @@
 <template>
-  <div class="dash-sidebar">
-    <ul class="dash-menu">
-
-      <!-- ================= MAIN MENU ================= -->
-
-      <li
-        v-for="item in menuItems"
-        :key="item.nav"
-        :class="{ active: isActive(item) }"
-        @click="navigateTo(item)"
-      >
-        <span class="icon-badge">
-          <i :class="item.icon"></i>
-        </span>
-
-        <span class="menu-label">
-          {{ item.label }}
-        </span>
-      </li>
-
-
-      <!-- ================= ACCOUNT / SUPPORT ================= -->
-
-      <template
-        v-for="item in accountItems"
-        :key="item.nav"
-      >
-
-        <li
-          :class="{
-            active: isActive(item),
-            'support-open':
-              item.nav === 'support' && supportOpen
-          }"
-          @click="navigateTo(item)"
-        >
-
-          <span class="icon-badge">
-            <i :class="item.icon"></i>
-          </span>
-
-          <span class="menu-label">
-            {{ item.label }}
-          </span>
-
-          <i
-            v-if="item.nav === 'support'"
-            class="mdi mdi-chevron-down support-chevron"
-            :class="{ rotated: supportOpen }"
-          ></i>
-
-        </li>
-
-
-        <!-- ================= SUPPORT SUBMENU ================= -->
-
-        <transition name="submenu">
-
-          <div
-            v-if="
-              item.nav === 'support' &&
-              supportOpen
-            "
-            class="support-submenu"
-          >
-
-            <a
-              href="https://wa.me/+2348084107354"
-              target="_blank"
-              rel="noopener"
-              class="submenu-item"
-            >
-
-              <span class="submenu-icon wa-icon">
-                <i class="mdi mdi-whatsapp"></i>
-              </span>
-
-              <span>
-                WhatsApp
-              </span>
-
-            </a>
-
-
-            <a
-              href="mailto:support@getcredmate.co?subject=Support Request"
-              class="submenu-item"
-            >
-
-              <span class="submenu-icon mail-icon">
-                <i class="mdi mdi-email-outline"></i>
-              </span>
-
-              <span>
-                Email
-              </span>
-
-            </a>
-
-          </div>
-
-        </transition>
-
-      </template>
-
-
-      <!-- ================= DIVIDER ================= -->
-
-      <div class="menu-divider"></div>
-
-
-      <!-- ================= SIGN OUT ================= -->
-
-      <li
-        class="sign-out-item"
-        @click="signOut"
-      >
-
-        <span class="icon-badge">
-          <i class="mdi mdi-logout-variant"></i>
-        </span>
-
-        <span class="menu-label">
-          Sign Out
-        </span>
-
-      </li>
-
-    </ul>
-  </div>
-</template>
-
-
-<script setup lang="ts">
-
-import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/authStore'
-
-
-const authStore = useAuthStore()
-
-const route = useRoute()
-const router = useRouter()
-
-const supportOpen = ref(false)
-
-
-// =====================================================
-// MENU CONFIGURATION
-// =====================================================
-
-const menuItems = [
-
-  {
-    nav: 'overview',
-    label: 'Dashboard',
-    icon: 'mdi mdi-view-dashboard-outline',
-    to: '/dashboard',
-  },
-
-]
-
-
-const accountItems = [
-
-  {
-    nav: 'support',
-    label: 'Support',
-    icon: 'mdi mdi-help-circle-outline',
-  },
-
-]
-
-
-// =====================================================
-// ACTIVE ROUTE
-// =====================================================
-
-const isActive = (item: any) => {
-
-  if (item.to) {
-
-    return (
-      route.path === item.to ||
-      route.path.startsWith(item.to + '/')
-    )
-
-  }
-
-  return false
-}
-
-
-// =====================================================
-// NAVIGATION
-// =====================================================
-
-const navigateTo = (item: any) => {
-
-  if (item.nav === 'support') {
-
-    supportOpen.value = !supportOpen.value
-
-    return
-  }
-
-  if (item.to) {
-
-    router.push(item.to)
-
-  }
-
-}
-
-
-// =====================================================
-// SIGN OUT
-// =====================================================
-
-const signOut = async () => {
-
-  try {
-
-    await authStore.logout()
-
-    router.push({
-      name: 'login'
-    })
-
-  } catch (error) {
-
-    console.error(
-      'Logout failed:',
-      error
-    )
-
-  }
-
-}
-
-</script>
-
-
-<style scoped>
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-.dash-sidebar {
-
-  width: 260px;
-
-  padding: 18px 18px 20px;
-
-  background: #ffffff;
-
-  border-radius: 18px;
-
-  max-height: 100vh;
-
-  overflow-y: auto;
-
-}
-
-
-/* =====================================================
-   MENU
-===================================================== */
-
-.dash-menu {
-
-  list-style: none;
-
-  padding: 0;
-
-  margin: 0;
-
-}
-
-
-/* =====================================================
-   MENU ITEMS
-===================================================== */
-
-.dash-menu li {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  padding: 10px 12px;
-
-  margin-bottom: 7px;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  font-size: 14px;
-
-  font-weight: 500;
-
-  color: #6b7280;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-
-  user-select: none;
-
-}
-
-
-/* Hover */
-
-.dash-menu li:hover:not(.active) {
-
-  background: #f0fdf4;
-
-  color: #15803d;
-
-}
-
-
-/* =====================================================
-   ACTIVE ITEM
-===================================================== */
-
-.dash-menu li.active {
-
-  background: #f0fdf4;
-
-  color: #16a34a;
-
-  font-weight: 600;
-
-}
-
-
-.dash-menu li.active .icon-badge {
-
-  background: #dcfce7;
-
-}
-
-
-.dash-menu li.active .icon-badge i {
-
-  color: #16a34a;
-
-}
-
-
-/* =====================================================
-   ICON
-===================================================== */
-
-.icon-badge {
-
-  width: 36px;
-
-  height: 36px;
-
-  border-radius: 10px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  flex-shrink: 0;
-
-  font-size: 18px;
-
-  line-height: 1;
-
-  background: #f7f9fc;
-
-  transition: all 0.2s ease;
-
-}
-
-
-.icon-badge i {
-
-  color: #6b7280;
-
-  transition: color 0.2s ease;
-
-}
-
-
-/* Hover icon */
-
-.dash-menu li:hover:not(.active) .icon-badge {
-
-  background: #dcfce7;
-
-}
-
-
-.dash-menu li:hover:not(.active) .icon-badge i {
-
-  color: #16a34a;
-
-}
-
-
-/* =====================================================
-   SUPPORT CHEVRON
-===================================================== */
-
-.support-chevron {
-
-  margin-left: auto;
-
-  font-size: 18px;
-
-  color: #9ca3af;
-
-  transition:
-    transform 0.25s ease,
-    color 0.25s ease;
-
-}
-
-
-.support-chevron.rotated {
-
-  transform: rotate(180deg);
-
-}
-
-
-.dash-menu li.support-open {
-
-  background: #f0fdf4;
-
-  color: #16a34a;
-
-}
-
-
-.dash-menu li.support-open .support-chevron {
-
-  color: #16a34a;
-
-}
-
-
-/* =====================================================
-   SUPPORT SUBMENU
-===================================================== */
-
-.support-submenu {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 4px;
-
-  margin: 4px 0 12px 20px;
-
-  padding: 8px 10px 8px 12px;
-
-  border-left: 2px solid #bbf7d0;
-
-  background: #f7fdf9;
-
-  border-radius: 0 10px 10px 0;
-
-}
-
-
-/* =====================================================
-   SUBMENU ITEM
-===================================================== */
-
-.submenu-item {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 9px 10px;
-
-  border-radius: 8px;
-
-  font-size: 13px;
-
-  color: #6b7280;
-
-  text-decoration: none;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-
-}
-
-
-.submenu-item:hover {
-
-  background: #dcfce7;
-
-  color: #15803d;
-
-}
-
-
-/* =====================================================
-   SUBMENU ICON
-===================================================== */
-
-.submenu-icon {
-
-  width: 28px;
-
-  height: 28px;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color: white;
-
-  font-size: 14px;
-
-  flex-shrink: 0;
-
-}
-
-
-.wa-icon {
-
-  background: #16a34a;
-
-}
-
-
-.mail-icon {
-
-  background: #15803d;
-
-}
-
-
-/* =====================================================
-   DIVIDER
-===================================================== */
-
-.menu-divider {
-
-  height: 1px;
-
-  background: #e5e7eb;
-
-  margin: 12px 0;
-
-}
-
-
-/* =====================================================
-   SIGN OUT
-===================================================== */
-
-.sign-out-item {
-
-  color: #dc2626 !important;
-
-}
-
-
-.sign-out-item:hover {
-
-  background: #fef2f2 !important;
-
-  color: #b91c1c !important;
-
-}
-
-
-.sign-out-item .icon-badge {
-
-  background: #fef2f2;
-
-}
-
-
-.sign-out-item .icon-badge i {
-
-  color: #dc2626;
-
-}
-
-
-/* =====================================================
-   TRANSITIONS
-===================================================== */
-
-.submenu-enter-active,
-.submenu-leave-active {
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-
-}
-
-
-.submenu-enter-from,
-.submenu-leave-to {
-
-  opacity: 0;
-
-  transform: translateY(-8px);
-
-}
-
-
-/* =====================================================
-   SCROLLBAR
-===================================================== */
-
-.dash-sidebar::-webkit-scrollbar {
-
-  width: 5px;
-
-}
-
-
-.dash-sidebar::-webkit-scrollbar-track {
-
-  background: transparent;
-
-}
-
-
-.dash-sidebar::-webkit-scrollbar-thumb {
-
-  background: #d1d5db;
-
-  border-radius: 3px;
-
-}
-
-
-.dash-sidebar::-webkit-scrollbar-thumb:hover {
-
-  background: #9ca3af;
-
-}
-
-</style>
-<template>
-  <div class="dash-sidebar">
-    <ul class="dash-menu">
+  <div class="w-[260px] p-[18px_18px_20px] bg-[#074033] rounded-[18px] max-h-screen overflow-y-auto scrollbar-thin">
+    <ul class="list-none p-0 m-0">
 
       <!-- ================= MAIN MENU ================= -->
 
       <li
         v-for="item in menuItems1"
         :key="item.nav"
-        :class="{ active: isActive(item) }"
+        :class="[
+          'flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200',
+          isActive(item)
+            ? 'bg-white/15 text-white font-semibold'
+            : 'text-white/70 hover:bg-white/10 hover:text-white'
+        ]"
         @click="navigateTo(item)"
       >
-        <span class="icon-badge">
+        <span
+          :class="[
+            'w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none transition-all duration-200',
+            isActive(item) ? 'bg-white/20 text-white' : 'bg-white/10 text-white/70 group-hover:bg-white/15'
+          ]"
+        >
           <i :class="item.icon"></i>
         </span>
 
@@ -687,15 +29,28 @@ const signOut = async () => {
         </span>
       </li>
 
-      <p>plain and track</p>
+      <!-- Section label -->
+      <p class="mt-5 mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">
+        Plan & Track
+      </p>
 
       <li
         v-for="item in menuItems2"
         :key="item.nav"
-        :class="{ active: isActive(item) }"
+        :class="[
+          'flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200',
+          isActive(item)
+            ? 'bg-white/15 text-white font-semibold'
+            : 'text-white/70 hover:bg-white/10 hover:text-white'
+        ]"
         @click="navigateTo(item)"
       >
-        <span class="icon-badge">
+        <span
+          :class="[
+            'w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none transition-all duration-200',
+            isActive(item) ? 'bg-white/20 text-white' : 'bg-white/10 text-white/70'
+          ]"
+        >
           <i :class="item.icon"></i>
         </span>
 
@@ -704,15 +59,28 @@ const signOut = async () => {
         </span>
       </li>
 
-       <p>intelligence</p>
+      <!-- Section label -->
+      <p class="mt-5 mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">
+        Intelligence
+      </p>
 
       <li
         v-for="item in menuItems3"
         :key="item.nav"
-        :class="{ active: isActive(item) }"
+        :class="[
+          'flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200',
+          isActive(item)
+            ? 'bg-white/15 text-white font-semibold'
+            : 'text-white/70 hover:bg-white/10 hover:text-white'
+        ]"
         @click="navigateTo(item)"
       >
-        <span class="icon-badge">
+        <span
+          :class="[
+            'w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none transition-all duration-200',
+            isActive(item) ? 'bg-white/20 text-white' : 'bg-white/10 text-white/70'
+          ]"
+        >
           <i :class="item.icon"></i>
         </span>
 
@@ -721,15 +89,28 @@ const signOut = async () => {
         </span>
       </li>
 
-      <p>collaborations</p>
+      <!-- Section label -->
+      <p class="mt-5 mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">
+        Collaborations
+      </p>
 
       <li
         v-for="item in menuItems4"
         :key="item.nav"
-        :class="{ active: isActive(item) }"
+        :class="[
+          'flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200',
+          isActive(item)
+            ? 'bg-white/15 text-white font-semibold'
+            : 'text-white/70 hover:bg-white/10 hover:text-white'
+        ]"
         @click="navigateTo(item)"
       >
-        <span class="icon-badge">
+        <span
+          :class="[
+            'w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none transition-all duration-200',
+            isActive(item) ? 'bg-white/20 text-white' : 'bg-white/10 text-white/70'
+          ]"
+        >
           <i :class="item.icon"></i>
         </span>
 
@@ -737,8 +118,6 @@ const signOut = async () => {
           {{ item.label }}
         </span>
       </li>
-
-
 
       <!-- ================= ACCOUNT / SUPPORT ================= -->
 
@@ -746,17 +125,23 @@ const signOut = async () => {
         v-for="item in accountItems"
         :key="item.nav"
       >
-
         <li
-          :class="{
-            active: isActive(item),
-            'support-open':
-              item.nav === 'support' && supportOpen
-          }"
+          :class="[
+            'flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200',
+            isActive(item) || (item.nav === 'support' && supportOpen)
+              ? 'bg-white/15 text-white font-semibold'
+              : 'text-white/70 hover:bg-white/10 hover:text-white'
+          ]"
           @click="navigateTo(item)"
         >
-
-          <span class="icon-badge">
+          <span
+            :class="[
+              'w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none transition-all duration-200',
+              isActive(item) || (item.nav === 'support' && supportOpen)
+                ? 'bg-white/20 text-white'
+                : 'bg-white/10 text-white/70'
+            ]"
+          >
             <i :class="item.icon"></i>
           </span>
 
@@ -766,98 +151,66 @@ const signOut = async () => {
 
           <i
             v-if="item.nav === 'support'"
-            class="mdi mdi-chevron-down support-chevron"
-            :class="{ rotated: supportOpen }"
+            class="mdi mdi-chevron-down ml-auto text-lg text-white/50 transition-transform duration-250"
+            :class="{ 'rotate-180 text-white': supportOpen }"
           ></i>
-
         </li>
 
-
         <!-- ================= SUPPORT SUBMENU ================= -->
-
         <transition name="submenu">
-
           <div
-            v-if="
-              item.nav === 'support' &&
-              supportOpen
-            "
-            class="support-submenu"
+            v-if="item.nav === 'support' && supportOpen"
+            class="flex flex-col gap-1 ml-5 mt-1 mb-3 py-2 px-3 border-l-2 border-white/20 bg-white/5 rounded-r-[10px]"
           >
-
             <a
               href="https://wa.me/+2348084107354"
               target="_blank"
               rel="noopener"
-              class="submenu-item"
+              class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-white/70 no-underline transition-all duration-200 hover:bg-white/10 hover:text-white"
             >
-
-              <span class="submenu-icon wa-icon">
+              <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm shrink-0 bg-[#25D366]">
                 <i class="mdi mdi-whatsapp"></i>
               </span>
-
-              <span>
-                WhatsApp
-              </span>
-
+              <span>WhatsApp</span>
             </a>
-
 
             <a
               href="mailto:support@getcredmate.co?subject=Support Request"
-              class="submenu-item"
+              class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-white/70 no-underline transition-all duration-200 hover:bg-white/10 hover:text-white"
             >
-
-              <span class="submenu-icon mail-icon">
+              <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm shrink-0 bg-white/20">
                 <i class="mdi mdi-email-outline"></i>
               </span>
-
-              <span>
-                Email
-              </span>
-
+              <span>Email</span>
             </a>
-
           </div>
-
         </transition>
-
       </template>
 
-
       <!-- ================= DIVIDER ================= -->
-
-      <div class="menu-divider"></div>
-
+      <div class="h-px bg-white/15 my-3"></div>
 
       <!-- ================= SIGN OUT ================= -->
-
       <li
-        class="sign-out-item"
+        class="flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200 text-red-300 hover:bg-red-500/15 hover:text-red-200"
         @click="signOut"
       >
-
-        <span class="icon-badge">
+        <span class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none bg-red-500/15 text-red-300">
           <i class="mdi mdi-logout-variant"></i>
         </span>
 
         <span class="menu-label">
           Sign Out
         </span>
-
       </li>
-
     </ul>
   </div>
 </template>
 
-
 <script setup lang="ts">
-
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
-
 
 const authStore = useAuthStore()
 
@@ -866,13 +219,11 @@ const router = useRouter()
 
 const supportOpen = ref(false)
 
-
 // =====================================================
 // MENU CONFIGURATION
 // =====================================================
 
 const menuItems1 = [
-
   {
     nav: 'overview',
     label: 'Dashboard',
@@ -885,7 +236,6 @@ const menuItems1 = [
     icon: 'mdi mdi-view-dashboard-outline',
     to: '/banks&cards',
   },
-  
 ]
 
 const menuItems2 = [
@@ -905,7 +255,7 @@ const menuItems2 = [
     nav: 'overview',
     label: 'Expense Tracker',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/expensetracker',
+    to: '/expensetracking',
   },
   {
     nav: 'overview',
@@ -919,7 +269,6 @@ const menuItems2 = [
     icon: 'mdi mdi-view-dashboard-outline',
     to: '/goals&dreams',
   },
-
 ]
 
 const menuItems3 = [
@@ -927,45 +276,44 @@ const menuItems3 = [
     nav: 'overview',
     label: 'notification',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/smartvaults',
+    to: '/notifications',
   },
   {
     nav: 'overview',
-    label: 'moneey callender',
+    label: 'moneey calender',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/budgetplanner',
+    to: '/moneycalender',
   },
   {
     nav: 'overview',
     label: 'financial Gps',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/expensetracker',
+    to: '/financialgps',
   },
   {
     nav: 'overview',
-    label: 'subscription',
+    label: 'subscriptions',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/billsettlement',
+    to: '/subscriptions',
   },
   {
     nav: 'overview',
     label: 'money personality',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/goals&dreams',
+    to: '/moneypersonality',
   },
   {
     nav: 'overview',
     label: 'Ai coach',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/goals&dreams',
+    to: '/aicoach',
   },
   {
     nav: 'overview',
     label: 'year-end review',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/goals&dreams',
+    to: '/yearendreview',
   },
-
 ]
 
 const menuItems4 = [
@@ -973,524 +321,100 @@ const menuItems4 = [
     nav: 'overview',
     label: 'couple vault',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/smartvaults',
+    to: '/couple',
   },
   {
     nav: 'overview',
-    label: 'Business vault',
+    label: 'Business',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/budgetplanner',
+    to: '/business',
   },
   {
     nav: 'overview',
     label: 'student',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/expensetracker',
+    to: '/students',
   },
-
 ]
 
-
 const accountItems = [
-
   {
     nav: 'support',
     label: 'Support',
     icon: 'mdi mdi-help-circle-outline',
   },
-
 ]
-
 
 // =====================================================
 // ACTIVE ROUTE
 // =====================================================
 
 const isActive = (item: any) => {
-
   if (item.to) {
-
     return (
       route.path === item.to ||
       route.path.startsWith(item.to + '/')
     )
-
   }
-
   return false
 }
-
 
 // =====================================================
 // NAVIGATION
 // =====================================================
 
 const navigateTo = (item: any) => {
-
   if (item.nav === 'support') {
-
     supportOpen.value = !supportOpen.value
-
     return
   }
 
   if (item.to) {
-
     router.push(item.to)
-
   }
-
 }
-
 
 // =====================================================
 // SIGN OUT
 // =====================================================
 
 const signOut = async () => {
-
   try {
-
     await authStore.logout()
-
     router.push({
-      name: 'login'
+      name: 'login',
     })
-
   } catch (error) {
-
-    console.error(
-      'Logout failed:',
-      error
-    )
-
+    console.error('Logout failed:', error)
   }
-
 }
-
 </script>
 
-
 <style scoped>
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-.dash-sidebar {
-
-  width: 260px;
-
-  padding: 18px 18px 20px;
-
-  background: #ffffff;
-
-  border-radius: 18px;
-
-  max-height: 100vh;
-
-  overflow-y: auto;
-
-}
-
-
-/* =====================================================
-   MENU
-===================================================== */
-
-.dash-menu {
-
-  list-style: none;
-
-  padding: 0;
-
-  margin: 0;
-
-}
-
-
-/* =====================================================
-   MENU ITEMS
-===================================================== */
-
-.dash-menu li {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  padding: 10px 12px;
-
-  margin-bottom: 7px;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  font-size: 14px;
-
-  font-weight: 500;
-
-  color: #6b7280;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-
-  user-select: none;
-
-}
-
-
-/* Hover */
-
-.dash-menu li:hover:not(.active) {
-
-  background: #f0fdf4;
-
-  color: #15803d;
-
-}
-
-
-/* =====================================================
-   ACTIVE ITEM
-===================================================== */
-
-.dash-menu li.active {
-
-  background: #f0fdf4;
-
-  color: #16a34a;
-
-  font-weight: 600;
-
-}
-
-
-.dash-menu li.active .icon-badge {
-
-  background: #dcfce7;
-
-}
-
-
-.dash-menu li.active .icon-badge i {
-
-  color: #16a34a;
-
-}
-
-
-/* =====================================================
-   ICON
-===================================================== */
-
-.icon-badge {
-
-  width: 36px;
-
-  height: 36px;
-
-  border-radius: 10px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  flex-shrink: 0;
-
-  font-size: 18px;
-
-  line-height: 1;
-
-  background: #f7f9fc;
-
-  transition: all 0.2s ease;
-
-}
-
-
-.icon-badge i {
-
-  color: #6b7280;
-
-  transition: color 0.2s ease;
-
-}
-
-
-/* Hover icon */
-
-.dash-menu li:hover:not(.active) .icon-badge {
-
-  background: #dcfce7;
-
-}
-
-
-.dash-menu li:hover:not(.active) .icon-badge i {
-
-  color: #16a34a;
-
-}
-
-
-/* =====================================================
-   SUPPORT CHEVRON
-===================================================== */
-
-.support-chevron {
-
-  margin-left: auto;
-
-  font-size: 18px;
-
-  color: #9ca3af;
-
-  transition:
-    transform 0.25s ease,
-    color 0.25s ease;
-
-}
-
-
-.support-chevron.rotated {
-
-  transform: rotate(180deg);
-
-}
-
-
-.dash-menu li.support-open {
-
-  background: #f0fdf4;
-
-  color: #16a34a;
-
-}
-
-
-.dash-menu li.support-open .support-chevron {
-
-  color: #16a34a;
-
-}
-
-
-/* =====================================================
-   SUPPORT SUBMENU
-===================================================== */
-
-.support-submenu {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 4px;
-
-  margin: 4px 0 12px 20px;
-
-  padding: 8px 10px 8px 12px;
-
-  border-left: 2px solid #bbf7d0;
-
-  background: #f7fdf9;
-
-  border-radius: 0 10px 10px 0;
-
-}
-
-
-/* =====================================================
-   SUBMENU ITEM
-===================================================== */
-
-.submenu-item {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 9px 10px;
-
-  border-radius: 8px;
-
-  font-size: 13px;
-
-  color: #6b7280;
-
-  text-decoration: none;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-
-}
-
-
-.submenu-item:hover {
-
-  background: #dcfce7;
-
-  color: #15803d;
-
-}
-
-
-/* =====================================================
-   SUBMENU ICON
-===================================================== */
-
-.submenu-icon {
-
-  width: 28px;
-
-  height: 28px;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color: white;
-
-  font-size: 14px;
-
-  flex-shrink: 0;
-
-}
-
-
-.wa-icon {
-
-  background: #16a34a;
-
-}
-
-
-.mail-icon {
-
-  background: #15803d;
-
-}
-
-
-/* =====================================================
-   DIVIDER
-===================================================== */
-
-.menu-divider {
-
-  height: 1px;
-
-  background: #e5e7eb;
-
-  margin: 12px 0;
-
-}
-
-
-/* =====================================================
-   SIGN OUT
-===================================================== */
-
-.sign-out-item {
-
-  color: #dc2626 !important;
-
-}
-
-
-.sign-out-item:hover {
-
-  background: #fef2f2 !important;
-
-  color: #b91c1c !important;
-
-}
-
-
-.sign-out-item .icon-badge {
-
-  background: #fef2f2;
-
-}
-
-
-.sign-out-item .icon-badge i {
-
-  color: #dc2626;
-
-}
-
-
-/* =====================================================
-   TRANSITIONS
-===================================================== */
-
+/* Keep only the transition + scrollbar (Tailwind doesn’t cover these well) */
 .submenu-enter-active,
 .submenu-leave-active {
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
-
 
 .submenu-enter-from,
 .submenu-leave-to {
-
   opacity: 0;
-
   transform: translateY(-8px);
-
 }
 
-
-/* =====================================================
-   SCROLLBAR
-===================================================== */
-
-.dash-sidebar::-webkit-scrollbar {
-
+/* Optional nicer scrollbar */
+.scrollbar-thin::-webkit-scrollbar {
   width: 5px;
-
 }
-
-
-.dash-sidebar::-webkit-scrollbar-track {
-
+.scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
-
 }
-
-
-.dash-sidebar::-webkit-scrollbar-thumb {
-
-  background: #d1d5db;
-
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
-
 }
-
-
-.dash-sidebar::-webkit-scrollbar-thumb:hover {
-
-  background: #9ca3af;
-
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
-
 </style>
