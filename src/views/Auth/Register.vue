@@ -25,7 +25,7 @@ const loading = ref(false)
 const successMessage = ref('')
 const formRef = ref()
 
-const loading = ref(false)
+
 
 const togglePassword = () => {
   showPassword.value = !showPassword.value
