@@ -1,14 +1,16 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { supabase } from '@/services/supabase' // ✅ fixed path
+import { supabase } from '@/services/supabase'
 
 const API_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1`
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 120000,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    apikey: SUPABASE_ANON_KEY
   }
 })
 
@@ -20,10 +22,6 @@ apiClient.interceptors.request.use(
       const token = data.session?.access_token
 
       if (token) {
-        if (!config.headers) {
-          config.headers = {}
-        }
-
         config.headers.Authorization = `Bearer ${token}`
       }
     } catch (err) {
@@ -42,6 +40,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       await supabase.auth.signOut()
     }
+
     return Promise.reject(error)
   }
 )
@@ -59,6 +58,7 @@ const ApiService = {
   put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
     return apiClient.put(url, data, config).then((res) => res.data)
   },
+
   patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
     return apiClient.patch(url, data, config).then((res) => res.data)
   },
@@ -70,7 +70,9 @@ const ApiService = {
   upload<T = any>(url: string, payload: FormData): Promise<T> {
     return apiClient
       .post(url, payload, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       })
       .then((res) => res.data)
   }

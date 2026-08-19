@@ -25,8 +25,6 @@ const loading = ref(false)
 const successMessage = ref('')
 const formRef = ref()
 
-
-
 const togglePassword = () => {
   showPassword.value = !showPassword.value
 }
@@ -117,11 +115,22 @@ const passwordRules = [
   (v: string) => v.length >= 8 || 'Password must be at least 8 characters'
 ]
 
+const confirmPasswordRules = [
+  (v) => !!v || 'Please confirm your password',
+  (v) => v === password.value || 'Passwords do not match'
+]
+const termsRules = [(v: boolean) => v === true || 'You must agree to the terms and conditions']
 async function handleRegister() {
   loading.value = true
   successMessage.value = ''
+
   const { valid } = await formRef.value.validate()
-  if (!valid) return
+
+  if (!valid) {
+    loading.value = false
+    return
+  }
+
   const payload = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -129,15 +138,16 @@ async function handleRegister() {
     phone: phone.value,
     password: password.value
   }
+
   console.log('payload:', payload)
+
   try {
     const result = await authStore.register(payload)
 
     successMessage.value = result?.message || 'Account created and verified, proceed to Login.'
 
-    // Give the user a moment to see the success message before redirecting
     setTimeout(() => {
-      router.push('/')
+      router.push('/login')
     }, 2000)
   } catch {
     // authStore.error is already set and shown via the v-alert
@@ -182,7 +192,6 @@ async function handleRegister() {
               autocomplete="given-name"
               variant="outlined"
               density="comfortable"
-              
               color="green"
               hide-details="auto"
               rounded="lg"
@@ -196,7 +205,6 @@ async function handleRegister() {
               autocomplete="family-name"
               variant="outlined"
               density="comfortable"
-              
               color="green"
               hide-details="auto"
               rounded="lg"
