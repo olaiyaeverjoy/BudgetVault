@@ -1,25 +1,25 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
 // import { useAuthStore } from "@/stores/authStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/register",
-      name: "register",
-      component: () => import("@/views/Auth/Register.vue"),
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/Auth/Register.vue')
     },
     {
-      path: "/",
-      name: "login",
-      component: () => import("@/views/Auth/Login.vue"),
+      path: '/',
+      name: 'login',
+      component: () => import('@/views/Auth/Login.vue')
     },
     {
-      path: "/dashboard",
-      name: "dashboard",
-      component: () => import("@/views/Dashboard.vue"),
-      meta: { requiresAuth: true },
-    },
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/views/Dashboard.vue'),
+      meta: { requiresAuth: true }
+    }
     // {
     //   path: "/api-keys",
     //   name: "api-keys",
@@ -50,8 +50,8 @@ const router = createRouter({
     //   component: () => import("@/views/Settings.vue"),
     //   meta: { requiresAuth: true },
     // },
-  ],
-});
+  ]
+})
 
 // router.beforeEach((to, from, next) => {
 //   const auth = useAuthStore()
@@ -60,4 +60,4 @@ const router = createRouter({
 //   next()
 // })
 
-export default router;
+export default router

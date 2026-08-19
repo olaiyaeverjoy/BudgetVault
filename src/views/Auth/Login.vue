@@ -10,6 +10,8 @@ const email = ref('')
 const password = ref('')
 const showPassword = ref(false)
 const formRef = ref()
+const message = ref('')
+const messageType = ref<'success' | 'error'>('error')
 
 const emailRules = [
   (v: string) => !!v || 'Email is required',
@@ -38,15 +40,11 @@ async function handleLogin() {
   loading.value = true
 
   try {
-    const response = await authStore.login(
-      payload.email,
-      payload.password
-    )
+    const response = await authStore.login(payload.email, payload.password)
 
     console.log('Login response:', response)
 
     router.push('/dashboard')
-
   } catch (error) {
     console.error('Login failed:', error)
   } finally {
