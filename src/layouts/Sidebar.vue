@@ -280,7 +280,7 @@ const menuItems3 = [
   },
   {
     nav: 'overview',
-    label: 'moneey calender',
+    label: 'money calender',
     icon: 'mdi mdi-view-dashboard-outline',
     to: '/moneycalender',
   },
