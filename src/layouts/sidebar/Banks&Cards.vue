@@ -1,5 +1,5 @@
 <script setup>
-import MainLayout from '@/layouts/MainLayout.vue'   // adjust path if needed
+import MainLayout from '@/layouts/MainLayout.vue'
 import { useAppStore } from '@/stores/app.js'
 
 const app = useAppStore()
@@ -14,451 +14,275 @@ const statusItems = [
 
 <template>
   <MainLayout>
-    <div class="bank-page">
+    <div class="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:px-8">
+
+      <!-- Back button -->
+      <button
+        type="button"
+        @click="app.show('dashboard')"
+        class="mb-5 inline-flex h-9 items-center rounded-full border border-gray-200 bg-white px-4 text-xs font-semibold text-gray-700 transition hover:bg-gray-50"
+      >
+        ← Dashboard
+      </button>
+
       <!-- Header -->
-      <header class="page-header">
+      <header class="mb-6">
         <div>
-          <div class="section-label">Bank &amp; Cards</div>
-          <h1 class="page-title">Connect your money to your plan.</h1>
-          <p class="page-sub">
+          <div
+            class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-[#167456]"
+          >
+            Bank &amp; Cards
+          </div>
+
+          <h1
+            class="mt-1 text-2xl font-bold leading-tight tracking-tight text-gray-900 sm:text-[26px]"
+          >
+            Connect your money to your plan.
+          </h1>
+
+          <!-- <p
+            class="mt-1.5 max-w-xl text-[13px] leading-relaxed text-gray-500"
+          >
             Wema Bank is the primary connection in this demo. Other banks can
             enter the wider connection flow.
-          </p>
+          </p> -->
         </div>
-
-        <v-btn
-          variant="outlined"
-          class="dash-btn"
-          @click="app.show('dashboard')"
-        >
-          ← Dashboard
-        </v-btn>
       </header>
 
-      <!-- Cards -->
-      <div class="cards-flex">
-        <!-- LEFT: Wema Bank -->
-        <v-card class="panel left-panel" variant="flat">
-          <div class="d-flex align-center justify-space-between mb-4">
+      <!-- Main cards -->
+      <div class="flex w-full flex-col gap-4 lg:flex-row lg:items-start lg:gap-5">
+
+        <!-- ================================= -->
+        <!-- LEFT: WEMA BANK -->
+        <!-- ================================= -->
+        <section
+          class="w-full rounded-[20px] border border-[#eef2f7] bg-white p-[18px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] sm:p-[22px] lg:flex-[3]"
+        >
+
+          <!-- Panel heading -->
+          <div class="mb-4 flex items-start justify-between gap-3">
             <div>
-              <h2 class="panel-title">Wema Bank</h2>
-              <span class="panel-sub">Primary bank connection</span>
+              <h2 class="text-base font-bold text-gray-900">
+                Wema Bank
+              </h2>
+
+              <span class="text-xs text-gray-500">
+                Primary bank connection
+              </span>
             </div>
-            <v-chip size="small" class="preferred-chip" label>
+
+            <span
+              class="shrink-0 rounded-md bg-[#dff7ed] px-2.5 py-1 text-[10px] font-bold text-[#167456]"
+            >
               Preferred
-            </v-chip>
+            </span>
           </div>
 
           <!-- Bank Card -->
-          <div class="bank-card">
-            <div class="d-flex justify-space-between align-center">
-              <div class="d-flex align-center ga-2">
-                <div class="wema-logo">W</div>
-                <span class="font-weight-bold">Wema Bank</span>
+          <div
+            class="min-h-[200px] rounded-2xl bg-gradient-to-br from-[#084d3c] to-[#0b624d] p-5 text-white sm:min-h-[210px] sm:p-6"
+          >
+
+            <!-- Top -->
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <div
+                  class="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-[9px] bg-[#fff200] text-[15px] font-extrabold text-[#17332a]"
+                >
+                  W
+                </div>
+
+                <span class="text-sm font-bold">
+                  Wema Bank
+                </span>
               </div>
-              <span class="status-pill">● Ready to connect</span>
+
+              <span
+                class="rounded-full bg-white/10 px-2.5 py-1.5 text-[9px] text-[#c8f5e4] sm:text-[10px]"
+              >
+                ● Ready to connect
+              </span>
             </div>
 
-            <div class="balance-label">Available balance · demo</div>
-            <div class="balance-amount">₦420,000.00</div>
-
-            <div class="d-flex justify-space-between bank-meta">
-              <div>
-                <div class="meta-label">Account</div>
-                <strong>•••• 4821</strong>
+            <!-- Balance -->
+            <div class="mt-6">
+              <div
+                class="text-[9px] uppercase tracking-[0.1em] text-[#a9d8c9]"
+              >
+                Available balance · demo
               </div>
+
+              <div
+                class="mt-0.5 text-[27px] font-extrabold tracking-tight sm:text-[30px]"
+              >
+                ₦420,000.00
+              </div>
+            </div>
+
+            <!-- Account information -->
+            <div
+              class="mt-[18px] flex justify-between gap-4 text-xs"
+            >
+              <div>
+                <div class="mb-0.5 text-[11px] text-[#a9d8c9]">
+                  Account
+                </div>
+
+                <strong>
+                  •••• 4821
+                </strong>
+              </div>
+
               <div class="text-right">
-                <div class="meta-label">Status</div>
-                <strong class="status-ok">Verification required</strong>
+                <div class="mb-0.5 text-[11px] text-[#a9d8c9]">
+                  Status
+                </div>
+
+                <strong class="text-[#bff3df]">
+                  Verification required
+                </strong>
               </div>
             </div>
           </div>
 
           <!-- Status -->
-          <div class="status-grid">
+          <div class="mt-4 grid gap-2">
             <div
               v-for="item in statusItems"
               :key="item.label"
-              class="status-item"
+              class="flex items-center justify-between gap-3 rounded-[13px] border border-[#edf0ee] bg-[#f8faf9] px-3.5 py-3 text-xs text-[#56645f]"
             >
-              <span>{{ item.label }}</span>
-              <v-chip size="x-small" class="status-chip" label>
+              <span>
+                {{ item.label }}
+              </span>
+
+              <span
+                class="shrink-0 rounded-md bg-[#dff7ed] px-2 py-1 text-[10px] font-bold text-[#167456]"
+              >
                 {{ item.value }}
-              </v-chip>
+              </span>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="d-flex flex-column flex-sm-row ga-2 mt-4">
-            <v-btn
-              color="bvgreen"
-              class="action-btn text-white"
+          <div class="mt-4 flex flex-col gap-2 sm:flex-row">
+            <button
+              type="button"
               @click="app.demoConnect('Wema Bank')"
+              class="h-10 w-full rounded-[11px] bg-[#167456] px-4 text-xs font-bold text-white transition hover:bg-[#125f47] sm:w-auto"
             >
               Connect Wema Bank
-            </v-btn>
-            <v-btn
-              variant="outlined"
-              class="action-btn"
+            </button>
+
+            <button
+              type="button"
               @click="app.demoConnect('Wema debit card')"
+              class="h-10 w-full rounded-[11px] border border-gray-200 bg-white px-4 text-xs font-bold text-gray-700 transition hover:bg-gray-50 sm:w-auto"
             >
               Link Wema card
-            </v-btn>
+            </button>
           </div>
-        </v-card>
+        </section>
 
-        <!-- RIGHT: Why connect -->
-        <v-card class="panel right-panel" variant="flat">
-          <h3 class="panel-title mb-1">Why connect?</h3>
-          <p class="why-text">
+        <!-- ================================= -->
+        <!-- RIGHT: WHY CONNECT -->
+        <!-- ================================= -->
+        <section
+          class="w-full rounded-[20px] border border-[#eef2f7] bg-white p-[18px] shadow-[0_8px_30px_rgba(0,0,0,0.04)] sm:p-[22px] lg:flex-[2]"
+        >
+
+          <h3 class="mb-1 text-base font-bold text-gray-900">
+            Why connect?
+          </h3>
+
+          <p
+            class="text-xs leading-[1.55] text-gray-500"
+          >
             Connect your bank so BudgetVault can bring your financial picture
             together and support planning, safe-to-spend, savings and
             automation workflows.
           </p>
 
           <!-- Debit Card -->
-          <div class="debit-card">
-            <div class="chip-strip"></div>
-            <div class="card-number">•••• •••• •••• 4821</div>
-            <div class="d-flex justify-space-between mt-4">
+          <div
+            class="mt-4 rounded-2xl bg-gradient-to-br from-[#142b27] to-[#0a5140] p-5 text-white"
+          >
+
+            <!-- Chip -->
+            <div
+              class="mb-[18px] h-[26px] w-[38px] rounded-md bg-[#d8ba43]"
+            ></div>
+
+            <!-- Card number -->
+            <div
+              class="text-sm tracking-[3px] sm:text-[15px]"
+            >
+              •••• •••• •••• 4821
+            </div>
+
+            <!-- Card details -->
+            <div class="mt-5 flex justify-between gap-4">
               <div>
-                <div class="card-meta-label">Cardholder</div>
-                <div class="card-meta-value">DEMO USER</div>
+                <div
+                  class="text-[8px] uppercase tracking-wider text-[#a8c6be]"
+                >
+                  Cardholder
+                </div>
+
+                <div class="mt-0.5 text-[11px]">
+                  DEMO USER
+                </div>
               </div>
+
               <div class="text-right">
-                <div class="card-meta-label">Valid thru</div>
-                <div class="card-meta-value">••/••</div>
+                <div
+                  class="text-[8px] uppercase tracking-wider text-[#a8c6be]"
+                >
+                  Valid thru
+                </div>
+
+                <div class="mt-0.5 text-[11px]">
+                  ••/••
+                </div>
               </div>
             </div>
           </div>
 
-          <v-btn
-            block
-            variant="outlined"
-            class="action-btn mt-3"
+          <!-- Link card button -->
+          <button
+            type="button"
             @click="app.demoConnect('Wema debit card')"
+            class="mt-3 h-10 w-full rounded-[11px] border border-gray-200 bg-white px-4 text-xs font-bold text-gray-700 transition hover:bg-gray-50"
           >
             Add / link Wema card
-          </v-btn>
+          </button>
 
-          <!-- Other Bank -->
-          <div class="other-bank">
-            <strong>Bank with another institution?</strong>
-            <p>
+          <!-- Other bank -->
+          <div
+            class="mt-4 rounded-[14px] border border-[#f4e8bd] bg-[#fffaf0] p-4"
+          >
+            <strong class="text-xs text-gray-900">
+              Bank with another institution?
+            </strong>
+
+            <p
+              class="my-1.5 text-[11px] leading-[1.45] text-gray-500"
+            >
               Keep Wema as the primary experience and use this CTA for the
               broader supported-bank connection flow.
             </p>
-            <v-btn
-              variant="outlined"
-              class="action-btn"
-              @click="() => window.alert('Demo: open supported banks selector')"
+
+            <button
+              type="button"
+              @click="window.alert('Demo: open supported banks selector')"
+              class="h-10 rounded-[11px] border border-gray-200 bg-white px-4 text-xs font-bold text-gray-700 transition hover:bg-gray-50"
             >
               Connect another bank →
-            </v-btn>
+            </button>
           </div>
-        </v-card>
+        </section>
+
       </div>
     </div>
   </MainLayout>
 </template>
-
-<style scoped>
-/* Page */
-.bank-page {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-/* Header */
-.page-header {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-@media (min-width: 768px) {
-  .page-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-}
-
-.section-label {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #167456;
-}
-
-.page-title {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 4px 0 6px;
-  color: #111827;
-  line-height: 1.25;
-}
-
-@media (min-width: 640px) {
-  .page-title {
-    font-size: 26px;
-  }
-}
-
-.page-sub {
-  font-size: 13px;
-  color: #6b7280;
-  max-width: 36rem;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.dash-btn {
-  border-radius: 999px !important;
-  border-color: #e5e7eb !important;
-  background: #fff !important;
-  font-weight: 600 !important;
-  font-size: 12px !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  height: 36px !important;
-  padding: 0 16px !important;
-  align-self: flex-start;
-}
-
-/* Cards layout */
-.cards-flex {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-@media (min-width: 960px) {
-  .cards-flex {
-    flex-direction: row;
-    gap: 20px;
-    align-items: flex-start;
-  }
-
-  .left-panel {
-    flex: 3;
-    min-width: 0;
-  }
-
-  .right-panel {
-    flex: 2;
-    min-width: 0;
-  }
-}
-
-/* Panels */
-.panel {
-  background: #fff !important;
-  border-radius: 20px !important;
-  border: 1px solid #eef2f7 !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04) !important;
-  padding: 18px 18px !important;
-}
-
-@media (min-width: 640px) {
-  .panel {
-    padding: 20px 22px !important;
-  }
-}
-
-.panel-title {
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0;
-  color: #111827;
-}
-
-.panel-sub {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.preferred-chip {
-  background: #dff7ed !important;
-  color: #167456 !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  height: 24px !important;
-}
-
-/* Bank card */
-.bank-card {
-  background: linear-gradient(135deg, #084d3c, #0b624d);
-  border-radius: 16px;
-  padding: 20px 20px;
-  color: #fff;
-  min-height: 200px;
-}
-
-@media (min-width: 640px) {
-  .bank-card {
-    padding: 22px 24px;
-    min-height: 210px;
-  }
-}
-
-.wema-logo {
-  width: 34px;
-  height: 34px;
-  background: #fff200;
-  color: #17332a;
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 15px;
-}
-
-.status-pill {
-  font-size: 10px;
-  background: rgba(255, 255, 255, 0.12);
-  padding: 6px 12px;
-  border-radius: 999px;
-  color: #c8f5e4;
-}
-
-.balance-label {
-  margin-top: 24px;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #a9d8c9;
-}
-
-.balance-amount {
-  font-size: 28px;
-  font-weight: 800;
-  margin-top: 2px;
-  letter-spacing: -0.02em;
-}
-
-@media (min-width: 640px) {
-  .balance-amount {
-    font-size: 30px;
-  }
-}
-
-.bank-meta {
-  margin-top: 18px;
-  font-size: 12px;
-}
-
-.meta-label {
-  font-size: 11px;
-  color: #a9d8c9;
-  margin-bottom: 2px;
-}
-
-.status-ok {
-  color: #bff3df;
-}
-
-/* Status grid */
-.status-grid {
-  display: grid;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.status-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 14px;
-  background: #f8faf9;
-  border: 1px solid #edf0ee;
-  border-radius: 13px;
-  font-size: 12px;
-  color: #56645f;
-}
-
-.status-chip {
-  background: #dff7ed !important;
-  color: #167456 !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  height: 22px !important;
-}
-
-/* Buttons */
-.action-btn {
-  border-radius: 11px !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-  height: 40px !important;
-}
-
-/* Why connect */
-.why-text {
-  font-size: 12px;
-  color: #6b7280;
-  line-height: 1.55;
-  margin: 0 0 4px;
-}
-
-.debit-card {
-  margin-top: 16px;
-  background: linear-gradient(135deg, #142b27, #0a5140);
-  border-radius: 16px;
-  padding: 18px 20px;
-  color: #fff;
-}
-
-.chip-strip {
-  width: 38px;
-  height: 26px;
-  border-radius: 6px;
-  background: #d8ba43;
-  margin-bottom: 18px;
-}
-
-.card-number {
-  font-size: 15px;
-  letter-spacing: 3px;
-}
-
-.card-meta-label {
-  font-size: 8px;
-  text-transform: uppercase;
-  color: #a8c6be;
-  letter-spacing: 0.06em;
-}
-
-.card-meta-value {
-  font-size: 11px;
-  margin-top: 2px;
-}
-
-/* Other bank */
-.other-bank {
-  margin-top: 16px;
-  padding: 16px;
-  background: #fffaf0;
-  border: 1px solid #f4e8bd;
-  border-radius: 14px;
-}
-
-.other-bank strong {
-  font-size: 12px;
-  color: #111827;
-}
-
-.other-bank p {
-  font-size: 11px;
-  color: #6b7280;
-  margin: 6px 0 12px;
-  line-height: 1.45;
-}
-</style>
