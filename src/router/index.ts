@@ -138,7 +138,11 @@ const router = createRouter({
       name: "smart",
       component: () => import("@/views/SmartVault.vue"),
     },
->>>>>>> 3bc9802 (vault management)
+    {
+      path: "/smart",
+      name: "smart",
+      component: () => import("@/views/SmartVault.vue"),
+    },
   ]
 })
 
