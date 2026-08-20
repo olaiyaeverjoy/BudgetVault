@@ -60,12 +60,7 @@
             <div class="mb-4 p-4 rounded-[10px] border border-[#bfe3c1] bg-[#eef8ef]">
               <div class="space-y-2.5 text-sm text-[#28422c] leading-relaxed">
                 <p class="flex items-start gap-2"><i class="mdi mdi-check text-[#2E7D32] mt-0.5"></i> Verifies your identity with your BVN and NIN, each confirmed by a one-time code</p>
-                <p class="flex items-start gap-2"><i class="mdi mdi-check text-[#2E7D32] mt-0.5"></i> Links your bank so BudgetVault can read balances and transactions</p>
-                <p class="flex items-start gap-2"><i class="mdi mdi-check text-[#2E7D32] mt-0.5"></i> Powers Safe-to-Spend and spend-anomaly alerts with real transaction data</p>
-                <p class="flex items-start gap-2 pt-2 border-t border-dashed border-[#f0c987]">
-                  <i class="mdi mdi-close text-[#b45309] mt-0.5"></i>
-                  Does <strong>not</strong> create a Savings, Business, or Couple Vault, and moves no money
-                </p>
+                
               </div>
             </div>
 
@@ -136,17 +131,20 @@
               @paste="onOtpPaste"
             />
 
-            <div class="flex gap-3 mt-6">
-              <button class="btn-ghost flex-1" @click="step = 1">← Back</button>
-              <button
-                class="btn-full flex-1"
-                :disabled="!phone.verified"
-                :class="{ 'btn-disabled': !phone.verified }"
-                @click="step = 3"
-              >
-                Continue to BVN →
-              </button>
-            </div>
+            <!-- BEFORE: -->
+<div class="flex gap-3 mt-6">
+  <button class="btn-ghost flex-1" @click="step = 1">← Back</button>
+  <button
+    class="btn-full flex-1"
+    :disabled="!phone.verified"
+    :class="{ 'btn-disabled': !phone.verified }"
+    @click="step = 3"
+  >
+    Continue →
+  </button>
+</div>
+
+
           </div>
 
           <!-- STEP 3: BVN VERIFICATION -->
@@ -301,18 +299,8 @@
               />
             </div>
 
-            <otp-panel
-              phase-key="nin"
-              :phase="nin"
-              context="NIN"
-              @send="sendOtp(nin)"
-              @autofill="autofillOtp(nin)"
-              @verify="verifyOtp(nin)"
-              @set-ref="(i, el) => setOtpRef('nin', i, el)"
-              @nav="onOtpKeydown"
-              @paste="onOtpPaste"
-            />
-
+     
+           
             <div class="flex gap-3 mt-6">
               <button class="btn-ghost flex-1" @click="bvnSubState = 'verified'; step = 3">← Back</button>
               <button
@@ -453,10 +441,12 @@
       </div>
     </div>
   </div>
+ 
 </template>
 
 <script setup>
-import { ref, reactive, computed, h } from 'vue'
+import { ref, reactive, computed,} from 'vue'
+import OtpPanel from '@/components/OtpPanel.vue'
 
 const totalSteps = 6
 const step = ref(1)
@@ -655,70 +645,14 @@ const resetDemo = () => {
   linkedSuccess.value = false
 }
 
-// ── Local OTP panel component (send / boxes / autofill / verify) ───────
-const OtpPanel = {
-  props: ['phase', 'context', 'phaseKey'],
-  emits: ['send', 'autofill', 'verify', 'set-ref', 'nav', 'paste'],
-  setup(props, { emit }) {
-    return () => {
-      const p = props.phase
-      if (p.verified) {
-        return h('div', { class: 'otp-verified-inner' }, [
-          h('span', { class: 'otp-check-dot' }, '\u2713'),
-          h('span', null, `${props.context} verified`),
-        ])
-      }
-      if (!p.sent) {
-        return h('div', {}, [
-          h('p', { class: 'text-sm text-[#5c6b5e] mb-3' }, `Send a one-time code to confirm your ${props.context}.`),
-          h('button', { class: 'btn-full w-full', onClick: () => emit('send') }, 'Send Code'),
-        ])
-      }
-      return h('div', {}, [
-        h('div', { class: 'flex justify-center gap-2 mb-4' }, p.digits.map((d, i) =>
-          h('input', {
-            key: i,
-            ref: (el) => emit('set-ref', i, el),
-            class: 'otp-input',
-            maxlength: 1,
-            inputmode: 'numeric',
-            value: d,
-            onInput: (e) => {
-              const v = e.target.value.replace(/\D/g, '').slice(-1)
-              p.digits[i] = v
-              if (v && i < p.digits.length - 1) {
-                emit('set-ref', i, e.target) // no-op, ref already set
-              }
-            },
-            onKeydown: (e) => emit('nav', { event: e, key: props.phaseKey, index: i }),
-            onPaste: (e) => emit('paste', { event: e, key: props.phaseKey }),
-          })
-        )),
-        h('div', { class: 'flex items-center gap-4 mb-3 text-sm' }, [
-          h('button', {
-            class: 'text-[#2E7D32] font-semibold disabled:text-[#9fb3a1]',
-            disabled: p.resendTimer > 0,
-            onClick: () => emit('send'),
-          }, p.resendTimer > 0 ? `Resend in ${p.resendTimer}s` : 'Resend Code'),
-          h('button', { class: 'text-[#2E7D32] font-semibold', onClick: () => emit('autofill') }, 'Autofill Demo OTP'),
-        ]),
-        h('button', {
-          class: 'btn-full w-full',
-          disabled: p.digits.join('').length < 6 || p.verifying,
-          onClick: () => emit('verify'),
-        }, p.verifying ? 'Verifying\u2026' : 'Verify Code'),
-        p.error ? h('p', { class: 'text-red-500 text-xs mt-2' }, p.error) : null,
-      ])
-    }
-  },
-}
+
 </script>
 
-<script>
-export default {}
-</script>
 
 <style scoped>
+.v-btn{
+    text-transform: none;
+}
 * {
   box-sizing: border-box;
 }
