@@ -1,7 +1,6 @@
 <template>
-  <div class="w-[260px] p-[18px_18px_20px] bg-[#074033] rounded-[18px] max-h-screen overflow-y-auto scrollbar-thin">
+  <div class="w-full p-[18px_18px_20px] bg-[#074033]">
     <ul class="list-none p-0 m-0">
-
       <!-- ================= MAIN MENU ================= -->
 
       <li
@@ -18,7 +17,9 @@
         <span
           :class="[
             'w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none transition-all duration-200',
-            isActive(item) ? 'bg-white/20 text-white' : 'bg-white/10 text-white/70 group-hover:bg-white/15'
+            isActive(item)
+              ? 'bg-white/20 text-white'
+              : 'bg-white/10 text-white/70 group-hover:bg-white/15'
           ]"
         >
           <i :class="item.icon"></i>
@@ -121,10 +122,7 @@
 
       <!-- ================= ACCOUNT / SUPPORT ================= -->
 
-      <template
-        v-for="item in accountItems"
-        :key="item.nav"
-      >
+      <template v-for="item in accountItems" :key="item.nav">
         <li
           :class="[
             'flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200',
@@ -168,7 +166,9 @@
               rel="noopener"
               class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-white/70 no-underline transition-all duration-200 hover:bg-white/10 hover:text-white"
             >
-              <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm shrink-0 bg-[#25D366]">
+              <span
+                class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm shrink-0 bg-[#25D366]"
+              >
                 <i class="mdi mdi-whatsapp"></i>
               </span>
               <span>WhatsApp</span>
@@ -178,7 +178,9 @@
               href="mailto:support@getcredmate.co?subject=Support Request"
               class="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-white/70 no-underline transition-all duration-200 hover:bg-white/10 hover:text-white"
             >
-              <span class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm shrink-0 bg-white/20">
+              <span
+                class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm shrink-0 bg-white/20"
+              >
                 <i class="mdi mdi-email-outline"></i>
               </span>
               <span>Email</span>
@@ -195,13 +197,13 @@
         class="flex items-center gap-3 px-3 py-2.5 mb-1.5 rounded-xl cursor-pointer text-sm font-medium select-none transition-all duration-200 text-red-300 hover:bg-red-500/15 hover:text-red-200"
         @click="signOut"
       >
-        <span class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none bg-red-500/15 text-red-300">
+        <span
+          class="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0 text-lg leading-none bg-red-500/15 text-red-300"
+        >
           <i class="mdi mdi-logout-variant"></i>
         </span>
 
-        <span class="menu-label">
-          Sign Out
-        </span>
+        <span class="menu-label"> Sign Out </span>
       </li>
     </ul>
   </div>
@@ -228,14 +230,14 @@ const menuItems1 = [
     nav: 'overview',
     label: 'Dashboard',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/dashboard',
+    to: '/dashboard'
   },
   {
     nav: 'overview',
     label: 'Banks & cards',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/banks&cards',
-  },
+    to: '/banks&cards'
+  }
 ]
 
 const menuItems2 = [
@@ -243,32 +245,32 @@ const menuItems2 = [
     nav: 'overview',
     label: 'smart vaults',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/smartvaults',
+    to: '/smartvaults'
   },
   {
     nav: 'overview',
     label: 'Budget planner',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/budgetplanner',
+    to: '/budgetplanner'
   },
   {
     nav: 'overview',
     label: 'Expense Tracker',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/expensetracking',
+    to: '/expensetracking'
   },
   {
     nav: 'overview',
     label: 'Bill settlement',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/billsettlement',
+    to: '/billsettlement'
   },
   {
     nav: 'overview',
     label: 'Goals & Dreams',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/goals&dreams',
-  },
+    to: '/goals&dreams'
+  }
 ]
 
 const menuItems3 = [
@@ -276,44 +278,44 @@ const menuItems3 = [
     nav: 'overview',
     label: 'notification',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/notifications',
+    to: '/notifications'
   },
   {
     nav: 'overview',
     label: 'money calender',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/moneycalender',
+    to: '/moneycalender'
   },
   {
     nav: 'overview',
     label: 'financial Gps',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/financialgps',
+    to: '/financialgps'
   },
   {
     nav: 'overview',
     label: 'subscriptions',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/subscriptions',
+    to: '/subscriptions'
   },
   {
     nav: 'overview',
     label: 'money personality',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/moneypersonality',
+    to: '/moneypersonality'
   },
   {
     nav: 'overview',
     label: 'Ai coach',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/aicoach',
+    to: '/aicoach'
   },
   {
     nav: 'overview',
     label: 'year-end review',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/yearendreview',
-  },
+    to: '/yearendreview'
+  }
 ]
 
 const menuItems4 = [
@@ -321,28 +323,28 @@ const menuItems4 = [
     nav: 'overview',
     label: 'couple vault',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/couple',
+    to: '/couple'
   },
   {
     nav: 'overview',
     label: 'Business',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/business',
+    to: '/business'
   },
   {
     nav: 'overview',
     label: 'student',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/students',
-  },
+    to: '/students'
+  }
 ]
 
 const accountItems = [
   {
     nav: 'support',
     label: 'Support',
-    icon: 'mdi mdi-help-circle-outline',
-  },
+    icon: 'mdi mdi-help-circle-outline'
+  }
 ]
 
 // =====================================================
@@ -351,10 +353,7 @@ const accountItems = [
 
 const isActive = (item: any) => {
   if (item.to) {
-    return (
-      route.path === item.to ||
-      route.path.startsWith(item.to + '/')
-    )
+    return route.path === item.to || route.path.startsWith(item.to + '/')
   }
   return false
 }
@@ -382,7 +381,7 @@ const signOut = async () => {
   try {
     await authStore.logout()
     router.push({
-      name: 'login',
+      name: 'login'
     })
   } catch (error) {
     console.error('Logout failed:', error)
@@ -394,7 +393,9 @@ const signOut = async () => {
 /* Keep only the transition + scrollbar (Tailwind doesn’t cover these well) */
 .submenu-enter-active,
 .submenu-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .submenu-enter-from,
