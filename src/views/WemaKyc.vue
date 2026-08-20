@@ -1,5 +1,17 @@
 <template>
-  
+  <!-- FIXED TOP HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 h-[58px] bg-white border-b border-[#dcefdd]">
+    <div class="h-full flex items-center justify-between px-4 sm:px-6">
+    
+
+      <!-- SKIP -->
+      <p class="text-lg sm:text-sm text-[#5c6b5e] m-2">
+        <router-link to="/dashboard" class="font-semibold text-[#2E7D32] hover:underline">
+          Go back
+        </router-link>
+      </p>
+    </div>
+  </header>
 
   <div class="flex mx-auto my-auto justify-center min-h-screen bg-[#f4faf4] pt-[58px]">
     
