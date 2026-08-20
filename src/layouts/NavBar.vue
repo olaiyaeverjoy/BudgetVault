@@ -38,7 +38,7 @@
 
       <!-- USER -->
 
-      <router-link to="/profile" class="flex">
+      <router-link to="/userprofile" class="flex">
         <div class="flex items-center gap-3 cursor-pointer">
           <!-- USER AVATAR -->
 

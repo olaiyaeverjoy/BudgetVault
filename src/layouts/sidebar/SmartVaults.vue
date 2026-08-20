@@ -101,9 +101,9 @@ const handleBudgetItemSave = (item) => {
 
       <!-- Metrics -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <Metric label="Total protected" value="₦0" valueClass="text-[#168064]" />
-        <Metric label="Active vaults" value="0" />
-        <Metric label="Next release" value="Jun 1" />
+        <Metric label="Total vaults amount" value="₦0" valueClass="text-[#168064]" />
+        <Metric label="Active vaults" value="3" />
+        <!-- <Metric label="" value="Jun 1" /> -->
       </div>
 
       <!-- Vault Cards -->
