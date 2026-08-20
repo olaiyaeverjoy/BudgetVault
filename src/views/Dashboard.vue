@@ -273,7 +273,7 @@ const goToFinancialGPS = () => {
 
           <!-- AI Coach -->
           <section
-            class="rounded-[20px] bg-[#17382e] p-5 text-white shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+            class="group bg-[#C9A94A] text-white rounded-[22px] shadow-card p-[21px] cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:scale-[1.01]"
           >
             <div class="flex items-center justify-between gap-4">
               <div>

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from 'daisyui'
-import defaultTheme from "tailwindcss/defaultTheme";
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
   plugins: [require('@tailwindcss/forms')],
@@ -8,15 +8,15 @@ export default {
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {
-   extend: {
-    colors: {
-      ink: '#0E1116',
-      paper: '#FAF7F0',
-      gold: '#F2B807',
-      success: '#1FAE6E',
-      danger: '#E5484D',
+    extend: {
+      colors: {
+        ink: '#0E1116',
+        paper: '#FAF7F0',
+        gold: '#F2B807',
+        success: '#1FAE6E',
+        danger: '#E5484D'
+      }
     },
-  },
     screens: {
       sm: '640px',
       md: '768px',
