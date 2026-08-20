@@ -122,6 +122,11 @@ const router = createRouter({
       component: () => import("@/layouts/sidebar/Student.vue"),
       meta: { requiresAuth: true },
     },
+    {
+      path: "/kyc",
+      name: "students",
+      component: () => import("@/views/WemaKyc.vue"),
+    },
   ]
 })
 
