@@ -103,9 +103,16 @@ const signOut = async () => {
         class="!flex md:!hidden mr-1"
         @click="toggleDrawer"
       />
-      <div class="text-lg font-semibold text-[#074033]">
-        BudgetVault
-      </div>
+      <img src="@/assets/budgetlogo.png" alt="BudgetVault Logo" class="h-20 w-auto object-contain" />
+    <div class="flex flex-col">
+      <p class="font-extrabold leading-none tracking-[-1.5px]">
+        <span class="block text-[32px] text-[#074033]"> Budget </span>
+
+        <span class="block ml-[38px] -mt-1 text-[29px] text-[#D4A72C]"> Vault </span>
+      </p>
+
+      <span class="ml-[39px] mt-1 h-[3px] w-[38px] rounded-full bg-[#D4A72C]"></span>
+    </div>
     </v-app-bar>
 
     <!-- ========== SIDEBAR ========== -->
