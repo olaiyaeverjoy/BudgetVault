@@ -6,9 +6,15 @@ import { useAuthStore } from '@/stores/authStore'
 const router = useRouter()
 const authStore = useAuthStore()
 
+const showPassword = ref(false)
+
+function togglePassword() {
+  showPassword.value = !showPassword.value
+}
+
 const email = ref('')
 const password = ref('')
-const showPassword = ref(false)
+
 const formRef = ref()
 const message = ref('')
 const messageType = ref<'success' | 'error'>('error')
@@ -21,10 +27,12 @@ const emailRules = [
 const passwordRules = [(v: string) => !!v || 'Password is required']
 
 const loading = ref(false)
+const errorMessage = ref('')
 
 async function handleLogin() {
   const { valid } = await formRef.value.validate()
 
+  errorMessage.value = ''
   if (!valid) return
 
   const payload = {
@@ -47,6 +55,8 @@ async function handleLogin() {
     router.push('/dashboard')
   } catch (error) {
     console.error('Login failed:', error)
+
+    errorMessage.value = 'Invalid email or password.'
   } finally {
     loading.value = false
   }
@@ -118,6 +128,13 @@ async function handleLogin() {
           >
             Forgot password?
           </button>
+
+          <div
+            v-if="errorMessage"
+            class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
+          >
+            {{ errorMessage }}
+          </div>
 
           <!-- Login button -->
           <v-btn

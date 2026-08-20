@@ -33,77 +33,7 @@ const toggleConfirmPassword = () => {
   showConfirmPassword.value = !showConfirmPassword.value
 }
 
-// const register = async () => {
-//   message.value = ''
-//   messageType.value = ''
 
-//   if (
-//     !firstName.value ||
-//     !lastName.value ||
-//     !email.value ||
-//     !phone.value ||
-//     !password.value ||
-//     !confirmPassword.value
-//   ) {
-//     message.value = 'Please fill in all required fields.'
-//     messageType.value = 'error'
-//     return
-//   }
-
-//   if (password.value.length < 8) {
-//     message.value =
-//       'Password must be at least 8 characters long.'
-//     messageType.value = 'error'
-//     return
-//   }
-
-//   if (password.value !== confirmPassword.value) {
-//     message.value = 'Passwords do not match.'
-//     messageType.value = 'error'
-//     return
-//   }
-
-//   if (!agreeTerms.value) {
-//     message.value =
-//       'Please agree to the terms and conditions.'
-//     messageType.value = 'error'
-//     return
-//   }
-
-//   loading.value = true
-
-//   try {
-//     /*
-//       TODO:
-//       Connect this to your register Edge Function.
-
-//       Example:
-
-//       await api.post('/register', {
-//         firstName: firstName.value,
-//         lastName: lastName.value,
-//         email: email.value,
-//         phone: phone.value,
-//         password: password.value
-//       })
-//     */
-
-//     message.value =
-//       'Account created successfully. Please check your email to verify your account.'
-
-//     messageType.value = 'success'
-
-//   } catch (error) {
-//     message.value =
-//       error?.response?.data?.error ||
-//       'Unable to create your account. Please try again.'
-
-//     messageType.value = 'error'
-
-//   } finally {
-//     loading.value = false
-//   }
-// }
 
 const requiredRule = (v: string) => !!v || 'This field is required'
 
@@ -120,6 +50,8 @@ const confirmPasswordRules = [
   (v) => v === password.value || 'Passwords do not match'
 ]
 const termsRules = [(v: boolean) => v === true || 'You must agree to the terms and conditions']
+
+
 async function handleRegister() {
   loading.value = true
   successMessage.value = ''
@@ -144,10 +76,10 @@ async function handleRegister() {
   try {
     const result = await authStore.register(payload)
 
-    successMessage.value = result?.message || 'Account created and verified, proceed to Login.'
+    successMessage.value = result?.message || 'Account created and verified, proceeds to Login.'
 
     setTimeout(() => {
-      router.push('/login')
+      router.push('/')
     }, 2000)
   } catch {
     // authStore.error is already set and shown via the v-alert
