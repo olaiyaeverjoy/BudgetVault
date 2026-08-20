@@ -440,7 +440,11 @@
 <script setup>
 import { ref, reactive, computed,} from 'vue'
 import OtpPanel from '@/components/OtpPanel.vue'
+import { ref, reactive, computed, h } from 'vue'
+import { useRouter } from 'vue-router';
 
+
+const router = useRouter()
 
 const gotodashboard = () => {
   router.push('/dashboard')

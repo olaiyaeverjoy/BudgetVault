@@ -173,7 +173,6 @@ const connectWemaBank = () => {
               class="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#00a86b] via-[#00d084] to-[#00a86b]"
             ></div>
           </div>
-
           <!-- Status -->
           <div class="mt-4 grid gap-2">
             <div
