@@ -1,5 +1,5 @@
 <script setup>
-import VaultShell from '../components/VaultShell.vue'
+import VaultShell from '@/components/VaultShell.vue'
 </script>
 
 <template>
