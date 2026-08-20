@@ -1,243 +1,166 @@
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import Sidebar from './Sidebar.vue'
 import NavBar from './NavBar.vue'
 import { useDisplay } from 'vuetify'
 
 const { mdAndUp } = useDisplay()
 const route = useRoute()
-const router = useRouter()
 
 const drawer = ref(false)
 const supportOpen = ref(false)
 
+// Keep drawer open on desktop, closed by default on mobile
 onMounted(() => {
   drawer.value = mdAndUp.value
 })
 
-watchEffect(() => {
-  drawer.value = mdAndUp.value
+watch(mdAndUp, (val) => {
+  drawer.value = val
 })
 
-const toggleSupport = () => {
-  supportOpen.value = !supportOpen.value
+const toggleDrawer = () => {
+  drawer.value = !drawer.value
 }
 
 const closeSupport = () => {
   supportOpen.value = false
 }
-
-const toggleDrawer = () => {
-  drawer.value = !drawer.value
-}
 </script>
 
 <template>
-  <v-app>
-    <v-app-bar app elevation="0" class="px-3">
-      <!-- Menu button: mobile/tablet only, toggles the drawer -->
-      <v-app-bar-nav-icon class="d-flex d-md-none" @click="toggleDrawer" />
+  <v-app class="app-root">
+    <!-- Top App Bar -->
+    <v-app-bar
+      app
+      elevation="0"
+      height="64"
+      class="app-bar px-3 sm:px-4 border-b border-gray-200/80"
+    >
+      <!-- Hamburger – only on mobile/tablet -->
+      <v-app-bar-nav-icon
+        class="!flex md:!hidden mr-1"
+        @click="toggleDrawer"
+      />
 
       <NavBar />
     </v-app-bar>
 
-    <!-- Sidebar drawer: permanent on desktop, toggleable overlay on mobile/tablet -->
+    <!-- Sidebar -->
     <v-navigation-drawer
-      left
-      :permanent="$vuetify.display.mdAndUp"
-      app
-      :temporary="$vuetify.display.mdAndDown"
       v-model="drawer"
+      app
+      :permanent="mdAndUp"
+      :temporary="!mdAndUp"
+      :width="280"
+      class="side-bar"
       expand-on-hover
-      class="side-bar hidden md:block"
     >
       <Sidebar v-model:drawer="drawer" />
     </v-navigation-drawer>
 
-    <!-- <v-main class="mt-4 page-wrapper bg-plue-50">
-      <v-container fluid class="page-wrapper bg-blue-50">
-        <slot />
-      </v-container>
-    </v-main> -->
-
-    <v-main class="layout-main">
-      <v-container fluid class="layout-container">
+    <!-- Main content -->
+    <v-main class="main-content">
+      <v-container fluid class="content-container">
         <slot />
       </v-container>
     </v-main>
 
-    <!-- Backdrop to close menu when clicking outside -->
-    <div v-if="supportOpen" class="support-backdrop" @click="closeSupport" />
+    <!-- Support backdrop (if you still use the FAB elsewhere) -->
+    <div
+      v-if="supportOpen"
+      class="fixed inset-0 z-[9998] bg-black/20 backdrop-blur-[1px]"
+      @click="closeSupport"
+    />
   </v-app>
 </template>
 
 <style scoped>
-/* ==========================================
-   APP BACKGROUND
-========================================== */
-
-:deep(.v-application) {
-  background: #f7f9fc !important;
+.app-root {
+  background: #f7f5f0 !important;
 }
 
-.layout-main {
-  background: #f7f9fc;
-  min-height: 100vh;
-}
-
-.layout-container {
-  background: transparent;
-  padding: 24px;
-}
-
-/* ==========================================
-   APP BAR
-========================================== */
-
-:deep(.v-app-bar) {
-  background: #ffffff !important;
-  border-bottom: 1px solid #e5e7eb;
+.app-bar {
+  background: #f7f5f0 !important;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
 }
 
-/* ==========================================
-   SIDEBAR
-========================================== */
-
-.side-bar {
-  overflow: hidden !important;
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
+.main-content {
+  background: #f7f5f0;
+  min-height: 100vh;
 }
 
+.content-container {
+  background: transparent;
+  padding: 16px !important;
+}
+
+@media (min-width: 640px) {
+  .content-container {
+    padding: 20px 24px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-container {
+    padding: 24px 32px !important;
+  }
+}
+
+/* Sidebar styling */
 .side-bar :deep(.v-navigation-drawer__content) {
-  background: #ffffff;
+  background: white;
   border-right: 1px solid #e5e7eb;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
   overflow-y: auto;
 }
 
-.side-bar.v-navigation-drawer {
-  background: transparent !important;
-  border: none !important;
-}
-
-/* ==========================================
-   CARDS
-========================================== */
-
+/* Shared utility classes used across the app */
 :deep(.dashboard-card) {
-  background: white;
-  border-radius: 24px;
-  border: 1px solid #eef2f7;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  @apply bg-white rounded-3xl border border-[#eef2f7] shadow-[0_8px_30px_rgba(0,0,0,0.04)];
 }
-
-/* ==========================================
-   BUTTONS
-========================================== */
 
 :deep(.primary-btn) {
-  background: #16a34a !important;
-  color: white !important;
+  @apply !bg-green-600 !text-white hover:!bg-green-700;
 }
 
-:deep(.primary-btn:hover) {
-  background: #15803d !important;
-}
-
-/* ==========================================
-   SUPPORT FAB
-========================================== */
-
+/* Support FAB helpers (keep if used elsewhere) */
 .support-fab-wrap {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  z-index: 9999;
+  @apply fixed bottom-6 right-6 flex flex-col items-end gap-2.5 z-[9999];
 }
 
 .support-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
+  @apply flex flex-col items-end gap-2;
 }
 
 .support-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #111827;
-  text-decoration: none;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-  transition: all 0.2s ease;
-}
-
-.support-option:hover {
-  transform: translateY(-2px);
-  border-color: #16a34a;
+  @apply flex items-center gap-2 bg-white border border-gray-200 rounded-full px-3.5 py-2 text-[13px] font-medium text-gray-900 no-underline shadow-[0_6px_24px_rgba(0,0,0,0.08)] transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:border-green-600;
 }
 
 .option-wa {
-  background: #25d366;
+  @apply bg-[#25d366];
 }
 
 .option-mail {
-  background: #16a34a;
+  @apply bg-green-600;
 }
 
 .support-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 9999px;
-  background: #16a34a;
-  color: white;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(22, 163, 74, 0.25);
-  transition: all 0.25s ease;
-}
-
-.support-btn:hover {
-  background: #15803d;
-  transform: scale(1.08);
+  @apply w-[52px] h-[52px] rounded-full bg-green-600 text-white border-none cursor-pointer shadow-[0_10px_30px_rgba(22,163,74,0.25)] transition-all duration-[250ms] ease-in-out hover:bg-green-700 hover:scale-110;
 }
 
 .support-btn.open {
-  transform: rotate(45deg);
+  @apply rotate-45;
 }
-
-.support-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-}
-
-/* ==========================================
-   TRANSITIONS
-========================================== */
 
 .fab-menu-enter-active,
 .fab-menu-leave-active {
-  transition: all 0.2s ease;
+  @apply transition-all duration-200 ease-in-out;
 }
 
 .fab-menu-enter-from,
 .fab-menu-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
+  @apply opacity-0 translate-y-2.5;
 }
 </style>

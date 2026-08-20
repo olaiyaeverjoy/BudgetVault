@@ -3,7 +3,7 @@
   <header
     class="
       w-full
-      bg-white
+      bg-[#f7f5f0]
       border-b
       border-gray-100
       px-6
