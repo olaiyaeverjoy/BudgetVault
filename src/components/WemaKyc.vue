@@ -450,6 +450,11 @@ const gotodashboard = () => {
   router.push('/dashboard')
 }
 
+
+const gotodashboard = () => {
+  router.push('/dashboard')
+}
+
 const totalSteps = 6
 const step = ref(1)
 
