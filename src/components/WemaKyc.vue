@@ -1,24 +1,5 @@
 <template>
-  <!-- FIXED TOP HEADER -->
-  <header class="fixed top-0 left-0 right-0 z-50 h-[58px] bg-white border-b border-[#dcefdd]">
-    <div class="h-full flex items-center justify-between px-4 sm:px-6">
-      <!-- LOGO -->
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] flex items-center justify-center">
-          <i class="mdi mdi-piggy-bank-outline text-white text-lg"></i>
-        </div>
-        <span class="font-extrabold text-[#0f1a12] text-base">BudgetVault</span>
-      </div>
-
-      <!-- SKIP -->
-      <p class="text-xs sm:text-sm text-[#5c6b5e]">
-        Not now?
-        <router-link to="/dashboard" class="font-semibold text-[#2E7D32] hover:underline">
-          Skip for later
-        </router-link>
-      </p>
-    </div>
-  </header>
+ 
 
   <div class="flex mx-auto my-auto justify-center min-h-screen bg-[#f4faf4] pt-[58px]">
     
