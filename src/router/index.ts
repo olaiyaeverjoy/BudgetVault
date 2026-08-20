@@ -128,10 +128,17 @@ const router = createRouter({
       component: () => import('@/views/WemaKyc.vue')
     },
     {
+<<<<<<< HEAD
       path: '/userprofile',
       name: 'profile',
       component: () => import('@/views/profile/UserProfile.vue')
     }
+=======
+      path: "/smart",
+      name: "smart",
+      component: () => import("@/views/SmartVault.vue"),
+    },
+>>>>>>> 3bc9802 (vault management)
   ]
 })
 
