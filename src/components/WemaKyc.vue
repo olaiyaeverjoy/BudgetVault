@@ -451,6 +451,8 @@ const gotodashboard = () => {
 }
 
 
+const router = useRouter()
+
 const gotodashboard = () => {
   router.push('/dashboard')
 }
