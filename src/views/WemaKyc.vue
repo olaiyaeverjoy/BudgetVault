@@ -277,20 +277,32 @@
               </p>
             </div>
 
-            <div class="mb-4">
-              <label class="block text-xs font-bold text-[#5c6b5e] uppercase tracking-wider mb-2">
-                National Identification Number (NIN)
-              </label>
-              <input
-                v-model="nin.value"
-                placeholder="Enter 11-digit NIN"
-                class="form-field text-center text-lg tracking-widest font-semibold"
-                inputmode="numeric"
-                maxlength="11"
-                :disabled="nin.verified"
-                @input="nin.value = nin.value.replace(/\D/g, '').slice(0, 11)"
-              />
-            </div>
+           <div class="mb-4">
+  <label class="block text-xs font-bold text-[#5c6b5e] uppercase tracking-wider mb-2">
+    National Identification Number (NIN)
+  </label>
+  <input
+    v-model="nin.value"
+    placeholder="Enter 11-digit NIN"
+    class="form-field text-center text-lg tracking-widest font-semibold"
+    inputmode="numeric"
+    maxlength="11"
+    :disabled="nin.verified"
+    @input="nin.value = nin.value.replace(/\D/g, '').slice(0, 11)"
+  />
+</div>
+
+<otp-panel
+  phase-key="nin"
+  :phase="nin"
+  context="NIN"
+  @send="sendOtp(nin)"
+  @autofill="autofillOtp(nin)"
+  @verify="verifyOtp(nin)"
+  @set-ref="(i, el) => setOtpRef('nin', i, el)"
+  @nav="onOtpKeydown"
+  @paste="onOtpPaste"
+/>
 
      
            
@@ -302,7 +314,7 @@
                 :class="{ 'btn-disabled': !nin.verified }"
                 @click="step = 5"
               >
-                Continue to Bank Link →
+                Continue→
               </button>
             </div>
           </div>
