@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
-import StatCard from '../components/StatCard.vue'
-import BasePanel from '../components/BasePanel.vue'
-import ProgressTrack from '../components/ProgressTrack.vue'
+import StatCard from '@/components/StatCard.vue'
+import BasePanel from '@/components/BasePanel.vue'
+import ProgressTrack from '@/components/ProgressTrack.vue'
 import AddBudgetItemModal from '@/components/AddBudgetItemModal.vue'
 
 const showNewVaultModal = ref(false)
@@ -34,12 +35,14 @@ const toggleSettleBudget = () => {
   showSettleBudget.value = !showSettleBudget.value
 }
 
-import { useRouter } from 'vue-router'
+const goToFinancialGPS = () => {
+  router.push('/financialgps')
+}
 
 const router = useRouter()
 
-const goToFinancialGPS = () => {
-  router.push('/financialgps')
+const goToAiCoach = () => {
+  router.push('/aicoach')
 }
 </script>
 
@@ -157,7 +160,7 @@ const goToFinancialGPS = () => {
 
         <StatCard
           label="Savings"
-          value="₦18,500"
+          value="₦84,000"
           valueClass="text-[#168064]"
           meta="Today without affecting goals"
           :highlight="true"
@@ -273,7 +276,8 @@ const goToFinancialGPS = () => {
 
           <!-- AI Coach -->
           <section
-            class="group bg-[#C9A94A] text-white rounded-[22px] shadow-card p-[21px] cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:scale-[1.01]"
+          @click="goToAiCoach"
+            class="group bg-[#074033] text-white rounded-[22px] shadow-card p-[21px] cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:scale-[1.01]"
           >
             <div class="flex items-center justify-between gap-4">
               <div>

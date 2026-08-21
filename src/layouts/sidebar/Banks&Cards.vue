@@ -21,13 +21,13 @@ const connectWemaBank = () => {
   <MainLayout>
     <div class="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:px-8">
       <!-- Back button -->
-      <button
+      <!-- <button
         type="button"
         @click="app.show('dashboard')"
         class="mb-5 inline-flex h-9 items-center rounded-full border border-gray-200 bg-white px-4 text-xs font-semibold text-gray-700 transition hover:bg-gray-50"
       >
         ← Dashboard
-      </button>
+      </button> -->
 
       <!-- Header -->
       <header class="mb-6">

@@ -124,25 +124,19 @@ const router = createRouter({
     },
     {
       path: '/kyc',
-      name: 'students',
+      name: 'kyc',
       component: () => import('@/views/WemaKyc.vue')
     },
     {
-<<<<<<< HEAD
       path: '/userprofile',
       name: 'profile',
       component: () => import('@/views/profile/UserProfile.vue')
-    }
-=======
-      path: "/smart",
-      name: "smart",
-      component: () => import("@/views/SmartVault.vue"),
     },
     {
-      path: "/smart",
-      name: "smart",
-      component: () => import("@/views/SmartVault.vue"),
-    },
+      path: '/smart',
+      name: 'smart',
+      component: () => import('@/views/SmartVault.vue')
+    }
   ]
 })
 
