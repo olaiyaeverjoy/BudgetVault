@@ -48,30 +48,36 @@ const handleBudgetSave = (settings) => {
       >
         <template #actions>
           <div class="relative w-full sm:w-auto">
-      <button
-        type="button"
-        @click.stop="editBudgetOpen = !editBudgetOpen"
-        class="w-full rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 sm:w-auto"
-      >
-        Edit Budget amount
-      </button>
+            <button
+              type="button"
+              @click.stop="editBudgetOpen = !editBudgetOpen"
+              class="w-full rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 sm:w-auto"
+            >
+              Edit Budget amount
+            </button>
 
-      <!-- Dropdown -->
-      <EditBudgetmodal
-        v-model="editBudgetOpen"
-        :initial-budget="budget.amount"
-        :initial-schedule="budget.schedule"
-        :initial-auto-renew="budget.autoRenew"
-        @save="handleBudgetSave"
-      />
+            <!-- Dropdown -->
+            <EditBudgetmodal
+              v-model="editBudgetOpen"
+              :initial-budget="budget.amount"
+              :initial-schedule="budget.schedule"
+              :initial-auto-renew="budget.autoRenew"
+              @save="handleBudgetSave"
+            />
           </div>
+          <button
+            type="button"
+            class="w-full rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 sm:w-auto"
+          >
+            Add budget
+          </button>
         </template>
       </PageHeader>
 
       <!-- Stats -->
       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-3.5">
         <StatCard
-          label="budget amount"
+          label="withdrawn amount"
           :value="`₦${budget.amount.toLocaleString()}`"
           meta="Confirmed"
         />
@@ -83,9 +89,9 @@ const handleBudgetSave = (settings) => {
           meta="47% of income"
         />
 
-        <StatCard label="Savings" value="₦84,000" valueClass="text-[#168064]" meta="20% target" />
+        <!-- <StatCard label="Savings" value="₦84,000" valueClass="text-[#168064]" meta="20% target" />
 
-        <StatCard label="Flex money" value="₦0,000" meta="₦0,000 weekly" :highlight="true" />
+        <StatCard label="Flex money" value="₦0,000" meta="₦0,000 weekly" :highlight="true" /> -->
       </div>
 
       <!-- Main content -->

@@ -16,10 +16,10 @@ const labels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
 
         <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-[#1a2b34] m-0">Year-End Review</h1>
+            <h1 class="text-2xl sm:text-3xl font-bold text-[#1a2b34] m-0">Transaction History</h1>
 
             <p class="text-sm text-[#68757d] mt-1 mb-0 max-w-xl">
-              Turn a year's money activity into a clear story.
+              Turn your money activity into a clear story.
             </p>
           </div>
 
@@ -96,8 +96,37 @@ const labels = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D']
         </div>
       </div>
 
+      <!-- transaction history cards -->
+      <div class="w-full rounded-[15px] border border-[#edf0ee] bg-white p-[15px] shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="text-[15px] font-bold text-gray-900">Transaction History</h2>
+
+          <button
+            type="button"
+            @click="openNewVaultModal"
+            class="rounded-[10px] bg-[#111827] px-[12px] py-[8px] text-[11px] font-bold text-white hover:opacity-90"
+          >
+            filter
+          </button>
+        </div>
+
+        <div class="flex min-h-[140px] items-center justify-center">
+          <div class="text-center">
+            <div
+              class="mx-auto mb-3 grid h-10 w-10 place-items-center rounded-full bg-gray-100 text-lg"
+            ></div>
+
+            <p class="text-[13px] font-semibold text-gray-700">No history yet</p>
+
+            <p class="mt-1 text-[11px] text-gray-400">
+              start using BudgetVault to see transaction history
+            </p>
+          </div>
+        </div>
+      </div>
+
       <!-- TWO COLUMNS -->
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-3.5">
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-3.5 mt-5">
         <!-- Monthly savings -->
         <section
           class="bg-white border border-[#e4e2db] rounded-2xl p-4 sm:p-5 shadow-[0_4px_16px_rgba(24,35,44,0.04)]"

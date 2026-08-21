@@ -1,14 +1,14 @@
 <template>
   <header class="w-full bg-[#f7f5f0] border-b border-gray-100 px-6 py-4 flex items-center">
     <img src="@/assets/budgetlogo.png" alt="BudgetVault Logo" class="h-20 w-auto object-contain" />
-    <div class="flex flex-col">
+    <div class="flex flex-col -ml-1">
       <p class="font-extrabold leading-none tracking-[-1.5px]">
         <span class="block text-[32px] text-[#074033]"> Budget </span>
 
-        <span class="block ml-[38px] -mt-1 text-[29px] text-[#D4A72C]"> Vault </span>
+        <span class="block -mt-1 text-[29px] text-[#D4A72C]"> Vault </span>
       </p>
 
-      <span class="ml-[39px] mt-1 h-[3px] w-[38px] rounded-full bg-[#D4A72C]"></span>
+      <span class="mt-1 h-[3px] w-[38px] rounded-full bg-[#D4A72C]"></span>
     </div>
     <!-- LEFT SPACER -->
 
@@ -17,7 +17,7 @@
     <!-- RIGHT SECTION -->
 
     <div class="flex justify-end items-center flex-1 gap-3">
-      <!-- MOBILE SUPPORT -->
+      <!-- MOBILE SUPPORT
 
       <div class="sm:hidden">
         <button
@@ -34,7 +34,19 @@
             {{ supportOpen ? 'mdi-close' : 'mdi-chat-processing' }}
           </v-icon>
         </button>
-      </div>
+      </div> -->
+
+      <!-- contact support -->
+
+      <!-- notifications -->
+      <button
+        type="button"
+        class="mr-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#FFF3C4] text-[#D4A72C] shadow-sm transition-all duration-200 hover:bg-[#D4A72C] hover:text-white"
+        @click="$router.push('/notifications')"
+        aria-label="Notifications"
+      >
+        <i class="mdi mdi-bell-alert-outline text-[20px]"></i>
+      </button>
 
       <!-- USER -->
 
@@ -51,60 +63,14 @@
       </router-link>
     </div>
   </header>
-
-  <!-- =====================================================
-       SUPPORT DROPDOWN
-  ====================================================== -->
-
-  <Teleport to="body">
-    <div v-if="supportOpen" class="support-nav-backdrop sm:hidden" @click="closeSupport" />
-
-    <transition name="fab-menu">
-      <div v-if="supportOpen" class="support-menu-dropdown sm:hidden" :style="dropdownStyle">
-        <!-- WHATSAPP -->
-
-        <a
-          href="https://wa.me/+2348084107354"
-          target="_blank"
-          rel="noopener"
-          class="support-option"
-          @click="closeSupport"
-        >
-          <span class="option-icon option-wa">
-            <v-icon size="16"> mdi-whatsapp </v-icon>
-          </span>
-
-          WhatsApp
-        </a>
-
-        <!-- EMAIL -->
-
-        <a
-          href="mailto:support@getcredmate.co?subject=Support Request"
-          class="support-option"
-          @click="closeSupport"
-        >
-          <span class="option-icon option-mail">
-            <v-icon size="16"> mdi-email-outline </v-icon>
-          </span>
-
-          Email support
-        </a>
-      </div>
-    </transition>
-  </Teleport>
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
-
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import Contact from '@/layouts/sidebar/contacts.vue'
 
 const router = useRouter()
-
-// =====================================================
-// PROPS
-// =====================================================
 
 const props = defineProps({
   drawer: Boolean
@@ -116,41 +82,7 @@ const toggleDrawer = () => {
   emit('update:drawer', !props.drawer)
 }
 
-// =====================================================
-// USER
-// =====================================================
-
-const initials = ref('U')
-
-// =====================================================
-// SUPPORT
-// =====================================================
-
-const supportOpen = ref(false)
-
-const supportBtnRef = ref(null)
-
-const dropdownStyle = ref({})
-
-const toggleSupport = async () => {
-  supportOpen.value = !supportOpen.value
-
-  if (supportOpen.value) {
-    await nextTick()
-
-    const rect = supportBtnRef.value.getBoundingClientRect()
-
-    dropdownStyle.value = {
-      top: `${rect.bottom + 8}px`,
-
-      right: `${window.innerWidth - rect.right}px`
-    }
-  }
-}
-
-const closeSupport = () => {
-  supportOpen.value = false
-}
+const initials = ref('O.E')
 </script>
 
 <style scoped>
