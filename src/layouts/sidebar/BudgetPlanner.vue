@@ -9,7 +9,7 @@ import StatCard from '@/components/StatCard.vue'
 import BasePanel from '@/components/BasePanel.vue'
 import ProgressTrack from '@/components/ProgressTrack.vue'
 import Metric from '@/components/Metric.vue'
-import EditBudgetModal from '@/components/EditBudgetModal.vue'
+import EditBudgetModal from '@/components/EditBudgetmodal.vue'
 
 const app = useAppStore()
 
