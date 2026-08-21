@@ -30,11 +30,11 @@ const router = createRouter({
     },
     // plain&track
     {
-      path: '/smartvaults',
-      name: 'smartvaults',
-      component: () => import('@/layouts/sidebar/SmartVaults.vue'),
-      meta: { requiresAuth: true }
+      path: '/smart',
+      name: 'smart',
+      component: () => import('@/layouts/sidebar/SmartVault.vue')
     },
+
     {
       path: '/budgetplanner',
       name: 'budgetplanner',
@@ -98,9 +98,9 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/yearendreview',
-      name: 'year-endreview',
-      component: () => import('@/layouts/sidebar/YearEndReview.vue'),
+      path: '/transactionhistory',
+      name: 'transactionhistory',
+      component: () => import('@/layouts/sidebar/TransactionHistory.vue'),
       meta: { requiresAuth: true }
     },
     // collaboration
@@ -131,12 +131,68 @@ const router = createRouter({
       path: '/userprofile',
       name: 'profile',
       component: () => import('@/views/profile/userprofile.vue')
-    },
-    {
-      path: '/smart',
-      name: 'smart',
-      component: () => import('@/views/SmartVault.vue')
     }
+    // profile settings
+    // {
+    //   path: '/userinformation',
+    //   name: 'userinformation',
+    //   component: () => import('@/layouts/profilesettings/userinformation.vue')
+    // },
+    // // {
+    // //   path: '/profile',
+    // //   name: 'profile',
+    // //   component: () => import('@/layouts/profilesettings/UserInformat')
+    // // },
+    // {
+    //   path: '/privacy',
+    //   name: 'privacy',
+    //   component: () => import('@/layouts/profilesettings/privacy.vue')
+    // },
+    // {
+    //   path: '/personality',
+    //   name: 'personality',
+    //   component: () => import('@/layouts/profilesettings/PersonalitySettings.vue')
+    // },
+    // {
+    //   path: '/password',
+    //   name: 'password',
+    //   component: () => import('@/layouts/profilesettings/Password.vue')
+    // },
+    // {
+    //   path: '/notifications',
+    //   name: 'notifications',
+    //   component: () => import('@/layouts/profilesettings/Notifications.vue')
+    // },
+    // {
+    //   path: '/bank-cards',
+    //   name: 'bank-cards',
+    //   component: () => import('@/layouts/profilesettings/bank&cards.vue')
+    // },
+    // {
+    //   path: '/budget-settings',
+    //   name: 'budget-settings',
+    //   component: () => import('@/layouts/profilesettings/budgetsettings.vue')
+    // },
+    // {
+    //   path: '/ai-coach',
+    //   name: 'ai-coach',
+    //   component: () => import('@/layouts/profilesettings/AiCoach.vue')
+    // },
+    // {
+    //   path: '/vault-settings',
+    //   name: 'vault-settings',
+    //   component: () => import('@/layouts/profilesettings/VaultSettings.vue')
+    // },
+    // {
+    //   path: '/spendingsettings',
+    //   name: 'spendingsettings',
+    //   component: () => import('@/layouts/profilesettings/SpendingSettings.vue')
+    // },
+    // {
+    //   path: '/pricing',
+    //   name: 'pricing',
+    //   component: () => import('@/layouts/profilesettings/Pricing.vue')
+    // }
   ]
 })
 

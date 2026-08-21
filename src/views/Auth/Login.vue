@@ -69,8 +69,25 @@ async function handleLogin() {
       <!-- Card -->
       <div class="bg-white rounded-[24px] p-10 shadow-[0_18px_50px_rgba(0,0,0,0.08)] sm:p-10">
         <!-- Logo -->
-        <div class="text-center text-[26px] font-extrabold text-green-600 mb-9">BudgetVault</div>
+        <div class="flex items-center justify-center mr-15 mb-5">
+          <!-- Logo -->
+          <img
+            src="@/assets/budgetlogo.png"
+            alt="BudgetVault Logo"
+            class="h-16 w-auto object-contain"
+          />
 
+          <!-- Brand -->
+          <div class="flex flex-col items-center -ml-1">
+            <p class="font-extrabold leading-none tracking-[-1.5px]">
+              <span class="block text-[32px] text-[#074033]"> Budget </span>
+
+              <span class="block -mt-1 text-[29px] text-[#D4A72C]"> Vault </span>
+            </p>
+
+            <span class="mt-1 h-[3px] w-[38px] rounded-full bg-[#D4A72C]"></span>
+          </div>
+        </div>
         <!-- Back -->
         <RouterLink
           to="/"

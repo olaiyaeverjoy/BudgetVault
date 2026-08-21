@@ -2,8 +2,6 @@
   <!-- FIXED TOP HEADER -->
   <header class="fixed top-0 left-0 right-0 z-50 h-[58px] bg-white border-b border-[#dcefdd]">
     <div class="h-full flex items-center justify-between px-4 sm:px-6">
-    
-
       <!-- SKIP -->
       <p class="text-lg sm:text-sm text-[#5c6b5e] m-2">
         <router-link to="/dashboard" class="font-semibold text-[#2E7D32] hover:underline">
@@ -14,13 +12,15 @@
   </header>
 
   <div class="flex mx-auto my-auto justify-center min-h-screen bg-[#f4faf4] pt-[58px]">
-    
-
     <!-- MAIN CARD -->
     <div class="flex mt-8 items-center justify-center px-4 sm:px-6 py-10">
-      <div class="w-full max-w-[400px] bg-white rounded-[22px] border border-[#dcefdd] overflow-hidden shadow-lg">
+      <div
+        class="w-full max-w-[400px] bg-white rounded-[22px] border border-[#dcefdd] overflow-hidden shadow-lg"
+      >
         <!-- STICKY HEADER WITH GRADIENT -->
-        <div class="sticky top-0 z-20 bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] px-8 py-6 text-white">
+        <div
+          class="sticky top-0 z-20 bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] px-8 py-6 text-white"
+        >
           <div class="mb-5">
             <h1 class="text-xl font-bold mb-1">{{ stepHeaderTitles[step - 1] }}</h1>
             <p class="text-sm text-white/80">{{ stepHeaderDescriptions[step - 1] }}</p>
@@ -42,18 +42,22 @@
           <!-- STEP 1: CONSENT -->
           <div v-if="step === 1">
             <div class="mb-8">
-              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider">Step 1 of {{ totalSteps }}</span>
+              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider"
+                >Step 1 of {{ totalSteps }}</span
+              >
               <h2 class="text-xl font-semibold text-[#0f1a12] mt-3 mb-2">Connect your bank</h2>
               <p class="text-sm text-[#5c6b5e] leading-relaxed">
-                This links an existing bank account for spend tracking. It doesn't move any money
-                or create a Vault.
+                This links an existing bank account for spend tracking. It doesn't move any money or
+                create a Vault.
               </p>
             </div>
 
             <div class="mb-4 p-4 rounded-[10px] border border-[#bfe3c1] bg-[#eef8ef]">
               <div class="space-y-2.5 text-sm text-[#28422c] leading-relaxed">
-                <p class="flex items-start gap-2"><i class="mdi mdi-check text-[#2E7D32] mt-0.5"></i> Verifies your identity with your BVN and NIN, each confirmed by a one-time code</p>
-                
+                <p class="flex items-start gap-2">
+                  <i class="mdi mdi-check text-[#2E7D32] mt-0.5"></i> Verifies your identity with
+                  your BVN and NIN, each confirmed by a one-time code
+                </p>
               </div>
             </div>
 
@@ -62,7 +66,9 @@
               :class="consentIdentity && 'check-active'"
               @click="consentIdentity = !consentIdentity"
             >
-              <div class="check-box"><i v-if="consentIdentity" class="mdi mdi-check text-white text-xs"></i></div>
+              <div class="check-box">
+                <i v-if="consentIdentity" class="mdi mdi-check text-white text-xs"></i>
+              </div>
               <p class="text-sm text-[#28422c] leading-relaxed">
                 I agree to verify my identity using my BVN and NIN to link my bank account.
               </p>
@@ -72,7 +78,9 @@
               :class="consentData && 'check-active'"
               @click="consentData = !consentData"
             >
-              <div class="check-box"><i v-if="consentData" class="mdi mdi-check text-white text-xs"></i></div>
+              <div class="check-box">
+                <i v-if="consentData" class="mdi mdi-check text-white text-xs"></i>
+              </div>
               <p class="text-sm text-[#28422c] leading-relaxed">
                 I authorize BudgetVault to access my account balance and transaction history for
                 budgeting purposes only.
@@ -93,13 +101,21 @@
           <!-- STEP 2: PHONE VERIFICATION -->
           <div v-if="step === 2">
             <div class="mb-8">
-              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider">Step 2 of {{ totalSteps }}</span>
-              <h2 class="text-xl font-semibold text-[#0f1a12] mt-3 mb-2">Verify your phone number</h2>
-              <p class="text-sm text-[#5c6b5e] leading-relaxed">We'll send a one-time code to confirm it's you.</p>
+              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider"
+                >Step 2 of {{ totalSteps }}</span
+              >
+              <h2 class="text-xl font-semibold text-[#0f1a12] mt-3 mb-2">
+                Verify your phone number
+              </h2>
+              <p class="text-sm text-[#5c6b5e] leading-relaxed">
+                We'll send a one-time code to confirm it's you.
+              </p>
             </div>
 
             <div class="mb-4">
-              <label class="block text-xs font-bold text-[#5c6b5e] uppercase tracking-wider mb-2">Phone Number</label>
+              <label class="block text-xs font-bold text-[#5c6b5e] uppercase tracking-wider mb-2"
+                >Phone Number</label
+              >
               <input
                 v-model="phone.value"
                 placeholder="8012345678"
@@ -125,19 +141,17 @@
             />
 
             <!-- BEFORE: -->
-<div class="flex gap-3 mt-6">
-  <button class="btn-ghost flex-1" @click="step = 1">← Back</button>
-  <button
-    class="btn-full flex-1"
-    :disabled="!phone.verified"
-    :class="{ 'btn-disabled': !phone.verified }"
-    @click="step = 3"
-  >
-    Continue →
-  </button>
-</div>
-
-
+            <div class="flex gap-3 mt-6">
+              <button class="btn-ghost flex-1" @click="step = 1">← Back</button>
+              <button
+                class="btn-full flex-1"
+                :disabled="!phone.verified"
+                :class="{ 'btn-disabled': !phone.verified }"
+                @click="step = 3"
+              >
+                Continue →
+              </button>
+            </div>
           </div>
 
           <!-- STEP 3: BVN VERIFICATION -->
@@ -145,7 +159,9 @@
             <!-- INPUT SUB-STATE -->
             <template v-if="bvnSubState === 'input'">
               <div class="mb-8">
-                <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider">Step 3 of {{ totalSteps }}</span>
+                <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider"
+                  >Step 3 of {{ totalSteps }}</span
+                >
                 <h2 class="text-xl font-semibold text-[#0f1a12] mt-3 mb-2">Verify your BVN</h2>
                 <p class="text-sm text-[#5c6b5e] leading-relaxed">
                   Your BVN is used only to verify your identity and is never stored in full.
@@ -199,12 +215,18 @@
                 We found this name linked to your BVN. Confirm it's correct before proceeding.
               </p>
 
-              <div class="mb-6 flex items-center gap-4 rounded-xl bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] px-5 py-4 text-white">
-                <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-base font-extrabold flex-shrink-0">
+              <div
+                class="mb-6 flex items-center gap-4 rounded-xl bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] px-5 py-4 text-white"
+              >
+                <div
+                  class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-base font-extrabold flex-shrink-0"
+                >
                   {{ bvnInitials }}
                 </div>
                 <div>
-                  <p class="text-xs text-white/60 uppercase tracking-wide mb-1">Name on BVN record</p>
+                  <p class="text-xs text-white/60 uppercase tracking-wide mb-1">
+                    Name on BVN record
+                  </p>
                   <p class="text-base font-extrabold">{{ bvnName }}</p>
                 </div>
               </div>
@@ -231,10 +253,14 @@
               <p class="text-sm text-[#5c6b5e] mb-6 leading-relaxed">
                 In production this opens your camera for a liveness check. This demo simulates it.
               </p>
-              <div class="mb-6 flex flex-col items-center gap-4 rounded-xl border border-[#bfe3c1] bg-[#eef8ef] px-6 py-10">
+              <div
+                class="mb-6 flex flex-col items-center gap-4 rounded-xl border border-[#bfe3c1] bg-[#eef8ef] px-6 py-10"
+              >
                 <i class="mdi mdi-face-recognition text-[#2E7D32] text-5xl"></i>
                 <button class="btn-full" :disabled="livenessLoading" @click="simulateLiveness">
-                  <span v-if="livenessLoading" class="flex items-center gap-2"><span class="animate-spin">⏳</span> Scanning...</span>
+                  <span v-if="livenessLoading" class="flex items-center gap-2"
+                    ><span class="animate-spin">⏳</span> Scanning...</span
+                  >
                   <span v-else>Simulate Face Scan</span>
                 </button>
               </div>
@@ -247,15 +273,24 @@
                 Your identity has been confirmed. Now let's verify your NIN.
               </p>
 
-              <div class="mb-6 flex items-center gap-4 rounded-xl border border-[#bfe3c1] bg-[#eef8ef] px-4 py-3">
-                <div class="w-12 h-12 rounded-[10px] bg-[#dcf1dd] flex items-center justify-center flex-shrink-0">
+              <div
+                class="mb-6 flex items-center gap-4 rounded-xl border border-[#bfe3c1] bg-[#eef8ef] px-4 py-3"
+              >
+                <div
+                  class="w-12 h-12 rounded-[10px] bg-[#dcf1dd] flex items-center justify-center flex-shrink-0"
+                >
                   <i class="mdi mdi-fingerprint text-[#2E7D32] text-2xl"></i>
                 </div>
                 <div>
-                  <p class="text-xs text-[#5c6b5e] uppercase tracking-wide mb-1">Your BVN on record</p>
+                  <p class="text-xs text-[#5c6b5e] uppercase tracking-wide mb-1">
+                    Your BVN on record
+                  </p>
                   <p class="text-base font-bold text-[#0f1a12] tracking-wide">{{ maskedBvn }}</p>
                 </div>
-                <span class="ml-auto rounded-full bg-green-100 text-green-700 text-xs font-bold px-3 py-1 whitespace-nowrap">✓ Verified</span>
+                <span
+                  class="ml-auto rounded-full bg-green-100 text-green-700 text-xs font-bold px-3 py-1 whitespace-nowrap"
+                  >✓ Verified</span
+                >
               </div>
 
               <div class="flex gap-3">
@@ -270,7 +305,9 @@
           <!-- STEP 4: NIN VERIFICATION -->
           <div v-if="step === 4">
             <div class="mb-8">
-              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider">Step 4 of {{ totalSteps }}</span>
+              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider"
+                >Step 4 of {{ totalSteps }}</span
+              >
               <h2 class="text-xl font-semibold text-[#0f1a12] mt-3 mb-2">Verify your NIN</h2>
               <p class="text-sm text-[#5c6b5e] leading-relaxed">
                 Your NIN unlocks full account linking beyond the basic tier.
@@ -304,10 +341,10 @@
   @paste="onOtpPaste"
 />
 
-     
-           
             <div class="flex gap-3 mt-6">
-              <button class="btn-ghost flex-1" @click="bvnSubState = 'verified'; step = 3">← Back</button>
+              <button class="btn-ghost flex-1" @click="((bvnSubState = 'verified'), (step = 3))">
+                ← Back
+              </button>
               <button
                 class="btn-full flex-1"
                 :disabled="!nin.verified"
@@ -322,7 +359,9 @@
           <!-- STEP 5: BANK LINK -->
           <div v-if="step === 5">
             <div class="mb-8">
-              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider">Step 5 of {{ totalSteps }}</span>
+              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider"
+                >Step 5 of {{ totalSteps }}</span
+              >
               <h2 class="text-xl font-semibold text-[#0f1a12] mt-3 mb-2">Connect your bank</h2>
               <p class="text-sm text-[#5c6b5e] leading-relaxed">
                 Identity confirmed. Now we open a secure, read-only connection to your bank.
@@ -330,9 +369,11 @@
             </div>
 
             <div v-if="linkState === 'idle'">
-              <div class="mb-6 p-4 rounded-[10px] border border-[#bfe3c1] bg-[#eef8ef] text-sm text-[#28422c] leading-relaxed">
-                This step only links your bank for balance and transaction visibility. No Vault
-                is created here.
+              <div
+                class="mb-6 p-4 rounded-[10px] border border-[#bfe3c1] bg-[#eef8ef] text-sm text-[#28422c] leading-relaxed"
+              >
+                This step only links your bank for balance and transaction visibility. No Vault is
+                created here.
               </div>
               <button class="btn-full w-full" @click="startLink">
                 <i class="mdi mdi-bank-outline text-base mr-1"></i> Link Bank Account
@@ -345,8 +386,12 @@
             </div>
 
             <div v-else>
-              <div class="mb-6 flex items-center gap-4 rounded-xl bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] px-5 py-4 text-white">
-                <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <div
+                class="mb-6 flex items-center gap-4 rounded-xl bg-gradient-to-br from-[#1B5E20] to-[#4CAF50] px-5 py-4 text-white"
+              >
+                <div
+                  class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0"
+                >
                   <i class="mdi mdi-bank-check text-2xl"></i>
                 </div>
                 <div>
@@ -369,15 +414,21 @@
               </button>
             </div>
 
-            <button v-if="linkState === 'idle'" class="btn-ghost w-full mt-3" @click="step = 4">← Back</button>
+            <button v-if="linkState === 'idle'" class="btn-ghost w-full mt-3" @click="step = 4">
+              ← Back
+            </button>
           </div>
 
           <!-- STEP 6: REVIEW & SUBMIT -->
           <div v-if="step === 6 && !linkedSuccess">
             <div class="mb-8">
-              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider">Step {{ totalSteps }} of {{ totalSteps }} - Final</span>
+              <span class="text-xs font-bold text-[#2E7D32] uppercase tracking-wider"
+                >Step {{ totalSteps }} of {{ totalSteps }} - Final</span
+              >
               <h2 class="text-xl font-semibold text-[#0f1a12] mt-3 mb-2">Review & confirm</h2>
-              <p class="text-sm text-[#5c6b5e] leading-relaxed">Check everything below before you finish.</p>
+              <p class="text-sm text-[#5c6b5e] leading-relaxed">
+                Check everything below before you finish.
+              </p>
             </div>
 
             <div class="space-y-3 mb-6">
@@ -387,11 +438,15 @@
               </div>
               <div class="review-row-card" @click="jumpToBvn">
                 <span class="text-[#5c6b5e]">BVN</span>
-                <span class="font-semibold text-[#0f1a12]">{{ maskedId(bvn.value) }} · Verified</span>
+                <span class="font-semibold text-[#0f1a12]"
+                  >{{ maskedId(bvn.value) }} · Verified</span
+                >
               </div>
               <div class="review-row-card" @click="step = 4">
                 <span class="text-[#5c6b5e]">NIN</span>
-                <span class="font-semibold text-[#0f1a12]">{{ maskedId(nin.value) }} · Verified</span>
+                <span class="font-semibold text-[#0f1a12]"
+                  >{{ maskedId(nin.value) }} · Verified</span
+                >
               </div>
               <div class="review-row-card" @click="step = 5">
                 <span class="text-[#5c6b5e]">Bank</span>
@@ -404,7 +459,9 @@
               :class="declaration && 'check-active'"
               @click="declaration = !declaration"
             >
-              <div class="check-box"><i v-if="declaration" class="mdi mdi-check text-white text-xs"></i></div>
+              <div class="check-box">
+                <i v-if="declaration" class="mdi mdi-check text-white text-xs"></i>
+              </div>
               <p class="text-sm text-[#28422c] leading-relaxed">
                 I confirm the details above are accurate and I'm authorizing this account
                 <strong>link for spend tracking only</strong> — not a transfer of funds or the
@@ -424,7 +481,9 @@
 
           <!-- SUCCESS SCREEN -->
           <div v-if="step === 6 && linkedSuccess" class="text-center py-12">
-            <div class="w-20 h-20 rounded-full bg-[#4CAF50] text-white flex items-center justify-center text-5xl font-bold mb-6 mx-auto shadow-lg">
+            <div
+              class="w-20 h-20 rounded-full bg-[#4CAF50] text-white flex items-center justify-center text-5xl font-bold mb-6 mx-auto shadow-lg"
+            >
               ✓
             </div>
             <h2 class="text-xl font-semibold text-[#0f1a12] mb-2">Bank account linked 🎉</h2>
@@ -446,11 +505,10 @@
       </div>
     </div>
   </div>
- 
 </template>
 
 <script setup>
-import { ref, reactive, computed,} from 'vue'
+import { ref, reactive, computed } from 'vue'
 import OtpPanel from '@/components/OtpPanel.vue'
 
 const totalSteps = 6
@@ -462,7 +520,7 @@ const stepHeaderTitles = [
   'Verify your BVN',
   'Verify your NIN',
   'Link your bank',
-  'Review & confirm',
+  'Review & confirm'
 ]
 const stepHeaderDescriptions = [
   'What this connection does, and what it doesn\u2019t',
@@ -470,7 +528,7 @@ const stepHeaderDescriptions = [
   'One more identity check',
   'Almost there',
   'Open a secure, read-only connection',
-  'Check everything, then finish',
+  'Check everything, then finish'
 ]
 
 const showIncompleteBanner = computed(() => step.value > 1 && !linkedSuccess.value)
@@ -489,7 +547,7 @@ function makePhase(prefill) {
     digits: ['', '', '', '', '', ''],
     resendTimer: 0,
     error: '',
-    _timerHandle: null,
+    _timerHandle: null
   })
 }
 const phone = makePhase('8012345678')
@@ -565,7 +623,12 @@ const livenessLoading = ref(false)
 
 const bvnInitials = computed(() => {
   if (!bvnName.value) return ''
-  return bvnName.value.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')
+  return bvnName.value
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('')
 })
 
 const maskedBvn = computed(() => {
@@ -574,7 +637,8 @@ const maskedBvn = computed(() => {
   return `${b.slice(0, 3)} \u2022\u2022\u2022\u2022\u2022 ${b.slice(-3)}`
 })
 
-const maskedId = (val) => (val ? `${'\u2022'.repeat(Math.max(val.length - 3, 0))}${val.slice(-3)}` : '')
+const maskedId = (val) =>
+  val ? `${'\u2022'.repeat(Math.max(val.length - 3, 0))}${val.slice(-3)}` : ''
 
 const lookupBvn = () => {
   bvnLookupLoading.value = true
@@ -649,14 +713,11 @@ const resetDemo = () => {
   declaration.value = false
   linkedSuccess.value = false
 }
-
-
 </script>
 
-
 <style scoped>
-.v-btn{
-    text-transform: none;
+.v-btn {
+  text-transform: none;
 }
 * {
   box-sizing: border-box;

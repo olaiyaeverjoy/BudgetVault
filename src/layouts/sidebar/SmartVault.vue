@@ -117,7 +117,7 @@ onUnmounted(() => {
       <!-- Metrics (live from Supabase) -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <Metric
-          label="Total protected"
+          label="Total vault balance"
           :value="formatCurrency(vaultStore.totalProtected)"
           valueClass="text-[#168064]"
         />
@@ -201,7 +201,9 @@ onUnmounted(() => {
 
         <div class="flex min-h-[140px] items-center justify-center">
           <div class="text-center">
-            <div class="mx-auto mb-3 grid h-10 w-10 place-items-center rounded-full bg-gray-100 text-lg">
+            <div
+              class="mx-auto mb-3 grid h-10 w-10 place-items-center rounded-full bg-gray-100 text-lg"
+            >
               💰
             </div>
             <p class="text-[13px] font-semibold text-gray-700">No vaults yet</p>
@@ -241,7 +243,7 @@ onUnmounted(() => {
             <Pill variant="green">On</Pill>
           </div>
           <div class="flex justify-between items-center py-3">
-            <span class="text-[12px] text-bvmuted">Release before due date</span>
+            <span class="text-[12px] text-bvmuted">Release on due date</span>
             <Pill variant="gold">Review</Pill>
           </div>
         </BasePanel>

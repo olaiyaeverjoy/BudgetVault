@@ -1,14 +1,40 @@
 <script setup>
-import MainLayout from '@/layouts/MainLayout.vue'   // adjust path if needed
+// import MainLayout from '@/layouts/MainLayout.vue'   // adjust path if needed
 import PageHeader from '@/components/PageHeader.vue'
 import BasePanel from '@/components/BasePanel.vue'
 
 const days = [
-  { d: 1 }, { d: 2 }, { d: 3 }, { d: 4 }, { d: 5 }, { d: 6 }, { d: 7 },
-  { d: 8 }, { d: 9, tag: 'Salary', variant: 'event' }, { d: 10 }, { d: 11 }, { d: 12 }, { d: 13, tag: 'Rent', variant: 'gold' }, { d: 14 },
-  { d: 15 }, { d: 16 }, { d: 17, tag: 'Save', variant: 'event' }, { d: 18 }, { d: 19 }, { d: 20 }, { d: 21 },
-  { d: 22 }, { d: 23 }, { d: 24 }, { d: 25, tag: 'Salary', variant: 'event' }, { d: 26 }, { d: 27, tag: 'Power', variant: 'gold' }, { d: 28 },
-  { d: 29 }, { d: 30 }, { d: 31 },
+  { d: 1 },
+  { d: 2 },
+  { d: 3 },
+  { d: 4 },
+  { d: 5 },
+  { d: 6 },
+  { d: 7 },
+  { d: 8 },
+  { d: 9, tag: 'Salary', variant: 'event' },
+  { d: 10 },
+  { d: 11 },
+  { d: 12 },
+  { d: 13, tag: 'Rent', variant: 'gold' },
+  { d: 14 },
+  { d: 15 },
+  { d: 16 },
+  { d: 17, tag: 'Save', variant: 'event' },
+  { d: 18 },
+  { d: 19 },
+  { d: 20 },
+  { d: 21 },
+  { d: 22 },
+  { d: 23 },
+  { d: 24 },
+  { d: 25, tag: 'Salary', variant: 'event' },
+  { d: 26 },
+  { d: 27, tag: 'Power', variant: 'gold' },
+  { d: 28 },
+  { d: 29 },
+  { d: 30 },
+  { d: 31 }
 ]
 
 function cellClass(day) {
@@ -62,34 +88,30 @@ function cellClass(day) {
 
       <!-- Summary cards -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-        <div class="bg-white border border-bvline rounded-[18px] p-4 sm:p-[18px] shadow-card hover:shadow-md transition-all duration-200">
+        <div
+          class="bg-white border border-bvline rounded-[18px] p-4 sm:p-[18px] shadow-card hover:shadow-md transition-all duration-200"
+        >
           <h3 class="m-0 mb-1.5 text-[14.5px] font-bold text-gray-900">Money in</h3>
-          <p class="text-[11.5px] text-bvmuted m-0 leading-relaxed">
-            Salary and expected inflows.
-          </p>
-          <strong class="block text-[20px] sm:text-[22px] mt-3 text-[#168064]">
-            ₦420,000
-          </strong>
+          <p class="text-[11.5px] text-bvmuted m-0 leading-relaxed">Salary and expected inflows.</p>
+          <strong class="block text-[20px] sm:text-[22px] mt-3 text-[#168064]"> ₦420,000 </strong>
         </div>
 
-        <div class="bg-white border border-bvline rounded-[18px] p-4 sm:p-[18px] shadow-card hover:shadow-md transition-all duration-200">
+        <div
+          class="bg-white border border-bvline rounded-[18px] p-4 sm:p-[18px] shadow-card hover:shadow-md transition-all duration-200"
+        >
           <h3 class="m-0 mb-1.5 text-[14.5px] font-bold text-gray-900">Money out</h3>
-          <p class="text-[11.5px] text-bvmuted m-0 leading-relaxed">
-            Planned commitments.
-          </p>
-          <strong class="block text-[20px] sm:text-[22px] mt-3 text-[#c76b18]">
-            ₦98,500
-          </strong>
+          <p class="text-[11.5px] text-bvmuted m-0 leading-relaxed">Planned commitments.</p>
+          <strong class="block text-[20px] sm:text-[22px] mt-3 text-[#c76b18]"> ₦98,500 </strong>
         </div>
 
-        <div class="bg-white border border-bvline rounded-[18px] p-4 sm:p-[18px] shadow-card hover:shadow-md transition-all duration-200">
+        <div
+          class="bg-white border border-bvline rounded-[18px] p-4 sm:p-[18px] shadow-card hover:shadow-md transition-all duration-200"
+        >
           <h3 class="m-0 mb-1.5 text-[14.5px] font-bold text-gray-900">Protected</h3>
           <p class="text-[11.5px] text-bvmuted m-0 leading-relaxed">
             Vault allocations already reserved.
           </p>
-          <strong class="block text-[20px] sm:text-[22px] mt-3">
-            ₦84,000
-          </strong>
+          <strong class="block text-[20px] sm:text-[22px] mt-3"> ₦84,000 </strong>
         </div>
       </div>
     </div>
