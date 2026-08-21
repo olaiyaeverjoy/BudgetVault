@@ -130,7 +130,7 @@ const router = createRouter({
     {
       path: '/userprofile',
       name: 'profile',
-      component: () => import('@/views/profile/UserProfile.vue')
+      component: () => import('@/views/profile/userprofile.vue')
     },
     {
       path: '/smart',
