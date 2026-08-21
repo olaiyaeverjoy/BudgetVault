@@ -427,8 +427,8 @@
         </div>
 
         <div class="flex justify-center m-4">
-          <button class="text-sm font-medium text-[#2E7D32] hover:underline" @click="resetDemo">
-            Restart
+          <button @click="gotodashboard" class="text-sm font-medium text-[#2E7D32] hover:underline" @click="resetDemo">
+            Go to Dashboard
           </button>
         </div>
       </div>
@@ -440,6 +440,22 @@
 <script setup>
 import { ref, reactive, computed,} from 'vue'
 import OtpPanel from '@/components/OtpPanel.vue'
+import { ref, reactive, computed, h } from 'vue'
+import { useRouter } from 'vue-router';
+
+
+const router = useRouter()
+
+const gotodashboard = () => {
+  router.push('/dashboard')
+}
+
+
+const router = useRouter()
+
+const gotodashboard = () => {
+  router.push('/dashboard')
+}
 
 const totalSteps = 6
 const step = ref(1)
