@@ -136,6 +136,11 @@ const router = createRouter({
       path: '/smart',
       name: 'smart',
       component: () => import('@/views/SmartVault.vue')
+    },
+    {
+      path: '/budget',
+      name: 'budget',
+      component: () => import('@/views/BudgetPlanner.vue')
     }
   ]
 })
