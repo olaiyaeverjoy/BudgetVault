@@ -127,6 +127,11 @@ const router = createRouter({
       name: "students",
       component: () => import("@/views/WemaKyc.vue"),
     },
+    {
+      path: "/smart",
+      name: "smart",
+      component: () => import("@/views/SmartVault.vue"),
+    },
   ]
 })
 
