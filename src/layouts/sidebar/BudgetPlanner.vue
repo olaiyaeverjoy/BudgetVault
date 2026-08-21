@@ -69,7 +69,7 @@ const handleBudgetSave = (settings) => {
             type="button"
             class="w-full rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 sm:w-auto"
           >
-            Add budget
+            Add budget 
           </button>
         </template>
       </PageHeader>
@@ -122,11 +122,7 @@ const handleBudgetSave = (settings) => {
             <div
               class="rounded-[13px] border border-dashed border-[#dce5e1] bg-[#fafcfb] p-4 transition hover:border-[#bfd5cd] hover:bg-[#f6faf8]"
             >
-              <div
-                class="mb-3 grid h-9 w-9 place-items-center rounded-[10px] bg-bvmint text-[15px] text-bvgreen2"
-              >
-                +
-              </div>
+              
 
               <div class="text-[12px] font-bold text-[#26352f]">Add a vault</div>
 
