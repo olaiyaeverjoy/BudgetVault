@@ -9,7 +9,7 @@ import PersonalitySettings from '@/layouts/profilesettings/PersonalitySettings.v
 import Password from '@/layouts/profilesettings/Password.vue'
 import Notifications from '@/layouts/profilesettings/Notifications.vue'
 import BankCards from '@/layouts/profilesettings/bank&cards.vue'
-import BudgetSettings from '@/layouts/profilesettings/BudgetSettings.vue'
+import BudgetSettings from '@/layouts/profilesettings/budgetsettings.vue'
 import AiCoach from '@/layouts/profilesettings/AiCoach.vue'
 import VaultSettings from '@/layouts/profilesettings/VaultSettings.vue'
 import SpendingSettings from '@/layouts/profilesettings/SpendingSettings.vue'
