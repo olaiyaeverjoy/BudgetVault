@@ -9,7 +9,7 @@ import StatCard from '@/components/StatCard.vue'
 import BasePanel from '@/components/BasePanel.vue'
 import ProgressTrack from '@/components/ProgressTrack.vue'
 import Metric from '@/components/Metric.vue'
-import EditBudgetModal from '@/components/EditBudgetmodal.vue'
+import EditBudgetmodal from '@/components/EditBudgetmodal.vue'
 
 const app = useAppStore()
 
@@ -56,7 +56,7 @@ const handleBudgetSave = (settings) => {
       </button>
 
       <!-- Dropdown -->
-      <EditBudgetModal
+      <EditBudgetmodal
         v-model="editBudgetOpen"
         :initial-budget="budget.amount"
         :initial-schedule="budget.schedule"
