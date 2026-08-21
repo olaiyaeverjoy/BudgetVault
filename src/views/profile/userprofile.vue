@@ -4,7 +4,7 @@ import MainLayout from '@/layouts/MainLayout.vue'
 
 // Settings components – make sure the actual filenames match these imports
 import UserInformation from '@/layouts/profilesettings/UserInformation.vue'
-import Privacy from '@/layouts/profilesettings/privacy.vue'
+import Privacy from '@/layouts/profilesettings/Privacy.vue'
 import PersonalitySettings from '@/layouts/profilesettings/PersonalitySettings.vue'
 import Password from '@/layouts/profilesettings/Password.vue'
 import Notifications from '@/layouts/profilesettings/Notifications.vue'
