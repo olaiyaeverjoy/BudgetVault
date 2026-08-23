@@ -9,11 +9,13 @@ import PageHeader from '@/components/PageHeader.vue'
 import StatCard from '@/components/StatCard.vue'
 import BasePanel from '@/components/BasePanel.vue'
 import BudgetListItem from '@/components/BudgetListItem.vue'
-import EditBudgetmodal from '@/components/EditBudgetmodal.vue'
-import AddBudgetmodal from '@/components/AddBudgetmodal.vue'
-import BudgetDetailmodal from '@/components/BudgetDetailmodal.vue'
+import EditBudgetmodal from '@/components/EditBudgetModal.vue'
+import AddBudgetmodal from '@/components/AddBudgetModal.vue'
+import BudgetDetailmodal from '@/components/BudgetDetailModal.vue'
 import ViewAllBudgetsModal from '@/components/ViewAllBudgetsModal.vue'
 import { useBudgetSettingsStore } from '@/stores/budgetSettings'
+import BudgetDetailModal from '@/components/BudgetDetailModal.vue'
+import AddBudgetModal from '@/components/AddBudgetModal.vue'
 
 
 
@@ -224,14 +226,14 @@ function handleViewAllAddBudget() {
     </div>
 
     <!-- Add Budget popup -->
-    <AddBudgetmodal
+    <AddBudgetModal
   v-model="showAddBudgetModal"
   :total-budget="budgetSettingsStore.amount"
   @create="createBudget"
 />
 
     <!-- Budget detail popup -->
-    <BudgetDetailmodal
+    <BudgetDetailModal
       v-model="showBudgetDetailModal"
       :budget="selectedBudget"
       @add-money="handleAddMoney"
