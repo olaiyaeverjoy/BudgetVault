@@ -169,12 +169,12 @@ const menuItems1 = [
 ]
 
 const menuItems2 = [
-  {
-    nav: 'overview',
-    label: 'smart vault',
-    icon: 'mdi mdi-view-dashboard-outline',
-    to: '/smart'
-  },
+  // {
+  //   nav: 'overview',
+  //   label: 'smart vault',
+  //   icon: 'mdi mdi-view-dashboard-outline',
+  //   to: '/smart'
+  // },
   {
     nav: 'overview',
     label: 'Budget planner',
@@ -189,22 +189,30 @@ const menuItems2 = [
   },
   {
     nav: 'overview',
-    label: 'Expense Tracker',
-    icon: 'mdi mdi-view-dashboard-outline',
-    to: '/expensetracking'
-  },
-  {
-    nav: 'overview',
     label: 'Bill settlement',
     icon: 'mdi mdi-view-dashboard-outline',
     to: '/billsettlement'
   },
   {
     nav: 'overview',
-    label: 'money calender',
+    label: 'savings',
     icon: 'mdi mdi-view-dashboard-outline',
-    to: '/moneycalender'
+    to: '/savings'
   },
+
+  {
+    nav: 'overview',
+    label: 'Expense Tracker',
+    icon: 'mdi mdi-view-dashboard-outline',
+    to: '/expensetracking'
+  },
+  
+  // {
+  //   nav: 'overview',
+  //   label: 'money calender',
+  //   icon: 'mdi mdi-view-dashboard-outline',
+  //   to: '/moneycalender'
+  // },
   {
     nav: 'overview',
     label: 'Transaction History',

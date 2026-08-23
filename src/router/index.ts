@@ -59,6 +59,13 @@ const router = createRouter({
       component: () => import('@/layouts/sidebar/Goals&dreams.vue'),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/savings',
+      name: 'savings',
+      component: () => import('@/layouts/sidebar/savings.vue'),
+      meta: { requiresAuth: true }
+    },
+    
     // intelligence
     {
       path: '/notifications',
