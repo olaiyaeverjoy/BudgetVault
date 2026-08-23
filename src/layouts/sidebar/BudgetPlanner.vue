@@ -1,39 +1,109 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import MainLayout from '@/layouts/MainLayout.vue'
 import { useAppStore } from '@/stores/app'
+import { useBudgetStore } from '@/stores/budgets.js'
 
 import PageHeader from '@/components/PageHeader.vue'
 import StatCard from '@/components/StatCard.vue'
 import BasePanel from '@/components/BasePanel.vue'
-import ProgressTrack from '@/components/ProgressTrack.vue'
-import Metric from '@/components/Metric.vue'
-// import EditBudgetmodal from '../components/EditBudgetmodal.vue'
-import EditBudgetmodal from '@/components/EditBudgetmodal.vue'
+import BudgetListItem from '@/components/BudgetListItem.vue'
+import EditBudgetmodal from '@/components/EditBudgetModal.vue'
+import AddBudgetmodal from '@/components/AddBudgetModal.vue'
+import BudgetDetailmodal from '@/components/BudgetDetailModal.vue'
+import ViewAllBudgetsModal from '@/components/ViewAllBudgetsModal.vue'
+import { useBudgetSettingsStore } from '@/stores/budgetSettings'
+import BudgetDetailModal from '@/components/BudgetDetailModal.vue'
+import AddBudgetModal from '@/components/AddBudgetModal.vue'
 
+
+
+const budgetSettingsStore = useBudgetSettingsStore()
 const app = useAppStore()
+const budgetStore = useBudgetStore()
 
-// Edit Budget modal
+/* ----------------------------------------------------------------
+  Edit Budget (overall) — unchanged dropdown
+---------------------------------------------------------------- */
 const editBudgetOpen = ref(false)
 
-// Add Budget modal
-const showNewVaultModal = ref(false)
-
-// Budget settings
-const budget = ref({
-  amount: 650000,
-  schedule: '1-7',
-  autoRenew: true
-})
-
-// Save budget settings
 const handleBudgetSave = (settings) => {
-  budget.value = settings
-
-  console.log('Budget settings:', settings)
+  budgetSettingsStore.saveSettings(settings)
 
   app.showToast('Budget settings saved successfully')
+}
+
+/* ----------------------------------------------------------------
+  Budgets come from the shared store — same data the dashboard
+  reads/writes, so creating one on either page shows on both.
+---------------------------------------------------------------- */
+const incomePercent = computed(() => {
+  if (!budgetSettingsStore.amount) return 0
+
+  return Math.round(
+    (budgetStore.totalAllocation / budgetSettingsStore.amount) * 100
+  )
+})
+
+const previewBudgets = computed(() => budgetStore.budgets.slice(0, 4))
+const hiddenBudgetCount = computed(() => Math.max(0, budgetStore.budgets.length - 4))
+
+function formatNaira(n) {
+  return `₦${Number(n || 0).toLocaleString()}`
+}
+
+/* ----------------------------------------------------------------
+  Add Budget — popup modal
+---------------------------------------------------------------- */
+const showAddBudgetModal = ref(false)
+
+function openAddBudgetModal() {
+  showAddBudgetModal.value = true
+}
+
+function createBudget(payload) {
+  const created = budgetStore.createBudget(payload)
+
+  if (!created) {
+    app.showToast('Enter a valid name and amount')
+    return
+  }
+
+  app.showToast(`"${created.name}" budget created`)
+  showAddBudgetModal.value = false
+}
+
+/* ----------------------------------------------------------------
+  Budget detail — popup modal shown when a budget row is clicked
+---------------------------------------------------------------- */
+const showBudgetDetailModal = ref(false)
+const selectedBudget = ref(null)
+
+function openBudgetDetail(b) {
+  selectedBudget.value = b
+  showBudgetDetailModal.value = true
+}
+
+function handleAddMoney(id, amt) {
+  const b = budgetStore.addMoney(id, amt)
+  if (!b) return
+
+  app.showToast(`₦${amt.toLocaleString()} added to "${b.name}"`)
+}
+
+/* ----------------------------------------------------------------
+  View all — popup modal listing every budget
+---------------------------------------------------------------- */
+const showViewAllModal = ref(false)
+
+function openViewAll() {
+  showViewAllModal.value = true
+}
+
+function handleViewAllAddBudget() {
+  showViewAllModal.value = false
+  openAddBudgetModal()
 }
 </script>
 
@@ -58,18 +128,20 @@ const handleBudgetSave = (settings) => {
 
             <!-- Dropdown -->
             <EditBudgetmodal
-              v-model="editBudgetOpen"
-              :initial-budget="budget.amount"
-              :initial-schedule="budget.schedule"
-              :initial-auto-renew="budget.autoRenew"
-              @save="handleBudgetSave"
-            />
+  v-model="editBudgetOpen"
+  :initial-budget="budgetSettingsStore.amount"
+  :initial-schedule="budgetSettingsStore.schedule"
+  :initial-auto-renew="budgetSettingsStore.autoRenew"
+  @save="handleBudgetSave"
+/>
           </div>
+
           <button
             type="button"
+            @click="openAddBudgetModal"
             class="w-full rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700 sm:w-auto"
           >
-            Add budget 
+            Add budget
           </button>
         </template>
       </PageHeader>
@@ -77,26 +149,21 @@ const handleBudgetSave = (settings) => {
       <!-- Stats -->
       <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-3.5">
         <StatCard
-          label="withdrawn amount"
-          :value="`₦${budget.amount.toLocaleString()}`"
-          meta="Confirmed"
-        />
-
+  label="withdrawn amount"
+  :value="budgetSettingsStore.formattedAmount"
+  meta="Confirmed"
+/>
         <StatCard
           label="total allocation"
-          value="₦270,000"
+          :value="formatNaira(budgetStore.totalAllocation)"
           valueClass="text-bvorange"
-          meta="47% of income"
+          :meta="`${incomePercent}% of income`"
         />
-
-        <!-- <StatCard label="Savings" value="₦84,000" valueClass="text-[#168064]" meta="20% target" />
-
-        <StatCard label="Flex money" value="₦0,000" meta="₦0,000 weekly" :highlight="true" /> -->
       </div>
 
       <!-- Main content -->
-      <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-4">
-        <!-- Budgets -->
+      <div class="grid grid-cols-1 gap-4">
+        <!-- Budgets — listed items, preview capped to 4, "View all" opens the popup -->
         <BasePanel>
           <template #head>
             <div class="min-w-0">
@@ -109,125 +176,74 @@ const handleBudgetSave = (settings) => {
 
             <button
               type="button"
-              @click="showNewVaultModal = true"
+              @click="openViewAll"
               class="shrink-0 border-0 bg-transparent text-[11px] font-extrabold text-bvgreen2 transition-all duration-200 hover:translate-x-1 whitespace-nowrap"
             >
-              Add Budget →
+              View all →
             </button>
           </template>
 
-          <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-            <!-- Existing vault cards go here -->
-
-            <div
-              class="rounded-[13px] border border-dashed border-[#dce5e1] bg-[#fafcfb] p-4 transition hover:border-[#bfd5cd] hover:bg-[#f6faf8]"
-            >
-              
-
-              <div class="text-[12px] font-bold text-[#26352f]">Add a vault</div>
-
-              <p class="mt-1 text-[10px] leading-4 text-bvmuted">Create a new budget.</p>
-            </div>
-          </div>
-        </BasePanel>
-
-        <!-- Monthly allocation -->
-        <BasePanel title="Monthly allocation" meta="May 2026">
-          <div class="flex justify-between items-center gap-3 py-3 border-b border-[#eff0ed]">
-            <div class="min-w-0">
-              <div class="text-[12px] sm:text-[12.5px] font-extrabold truncate">
-                Housing & utilities
-              </div>
-
-              <div class="text-[10px] sm:text-[10.5px] text-bvmuted mt-0.5">Essential</div>
-            </div>
-
-            <div class="text-right shrink-0">
-              <b class="text-[12.5px] sm:text-[13px]"> ₦120,000 </b>
-
-              <div class="w-[90px] xs:w-[110px] sm:w-[130px] mt-1">
-                <ProgressTrack :percent="76" height="6px" />
-              </div>
-            </div>
+          <div v-if="budgetStore.budgets.length" class="divide-y divide-[#eff0ed]">
+            <BudgetListItem
+              v-for="b in previewBudgets"
+              :key="b.id"
+              :budget="b"
+              @select="openBudgetDetail"
+            />
           </div>
 
-          <div class="flex justify-between items-center gap-3 py-3 border-b border-[#eff0ed]">
-            <div class="min-w-0">
-              <div class="text-[12px] sm:text-[12.5px] font-extrabold truncate">Food</div>
+          <!-- Empty state -->
+          <div
+            v-else
+            class="rounded-[13px] border border-dashed border-[#dce5e1] bg-[#fafcfb] p-6 text-center"
+          >
+            <div class="text-[12px] font-bold text-[#26352f]">No budgets yet</div>
 
-              <div class="text-[10px] sm:text-[10.5px] text-bvmuted mt-0.5">Essential</div>
-            </div>
-
-            <div class="text-right shrink-0">
-              <b class="text-[12.5px] sm:text-[13px]"> ₦46,000 </b>
-
-              <div class="w-[90px] xs:w-[110px] sm:w-[130px] mt-1">
-                <ProgressTrack :percent="58" height="6px" />
-              </div>
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center gap-3 py-3 border-b border-[#eff0ed]">
-            <div class="min-w-0">
-              <div class="text-[12px] sm:text-[12.5px] font-extrabold truncate">Transport</div>
-
-              <div class="text-[10px] sm:text-[10.5px] text-bvmuted mt-0.5">Essential</div>
-            </div>
-
-            <div class="text-right shrink-0">
-              <b class="text-[12.5px] sm:text-[13px]"> ₦30,000 </b>
-
-              <div class="w-[90px] xs:w-[110px] sm:w-[130px] mt-1">
-                <ProgressTrack :percent="43" height="6px" />
-              </div>
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center gap-3 py-3">
-            <div class="min-w-0">
-              <div class="text-[12px] sm:text-[12.5px] font-extrabold truncate">Savings</div>
-
-              <div class="text-[10px] sm:text-[10.5px] text-bvmuted mt-0.5">Protected</div>
-            </div>
-
-            <div class="text-right shrink-0">
-              <b class="text-[12.5px] sm:text-[13px]"> ₦84,000 </b>
-
-              <div class="w-[90px] xs:w-[110px] sm:w-[130px] mt-1">
-                <ProgressTrack :percent="70" height="6px" />
-              </div>
-            </div>
-          </div>
-        </BasePanel>
-
-        <!-- Weekly guardrails -->
-        <BasePanel title="Weekly guardrails" meta="Next 7 days">
-          <Metric label="Safe to spend" value="₦31,800" valueClass="text-[#168064]" />
-
-          <div class="flex flex-col xs:flex-row gap-2 mt-4">
-            <button
-              type="button"
-              class="border border-bvline bg-white rounded-[10px] px-3 py-2.5 font-bold text-[11px] w-full xs:w-auto hover:border-green-600 hover:bg-green-50 transition"
-              @click="app.showToast('Weekly limit updated')"
-            >
-              Set weekly limit
-            </button>
+            <p class="mt-1 text-[10px] leading-4 text-bvmuted">
+              Create your first budget to start tracking it here.
+            </p>
 
             <button
               type="button"
-              class="border border-bvline bg-white rounded-[10px] px-3 py-2.5 font-bold text-[11px] w-full xs:w-auto hover:border-green-600 hover:bg-green-50 transition"
-              @click="app.showToast('Budget copied to next month')"
+              @click="openAddBudgetModal"
+              class="mt-3 rounded-xl bg-emerald-600 px-4 py-2 text-[11px] font-bold text-white transition hover:bg-emerald-700"
             >
-              Copy next month
+              Add budget
             </button>
           </div>
 
-          <p class="text-[12px] sm:text-[12.5px] text-bvmuted mt-4 leading-relaxed">
-            The planner protects fixed commitments first, then gives you a clear weekly number for
-            flexible spending.
-          </p>
+          <!-- Shows only when there are more than 4 budgets -->
+          <button
+            v-if="hiddenBudgetCount > 0"
+            type="button"
+            @click="openViewAll"
+            class="mt-3 w-full rounded-xl border border-dashed border-[#dce5e1] py-2.5 text-[11px] font-bold text-bvgreen2 transition hover:bg-[#f6faf8]"
+          >
+            +{{ hiddenBudgetCount }} more — view all →
+          </button>
         </BasePanel>
       </div>
     </div>
+
+    <!-- Add Budget popup -->
+    <AddBudgetModal
+  v-model="showAddBudgetModal"
+  :total-budget="budgetSettingsStore.amount"
+  @create="createBudget"
+/>
+
+    <!-- Budget detail popup -->
+    <BudgetDetailModal
+      v-model="showBudgetDetailModal"
+      :budget="selectedBudget"
+      @add-money="handleAddMoney"
+    />
+
+    <!-- View all budgets popup -->
+    <ViewAllBudgetsModal
+      v-model="showViewAllModal"
+      @select="openBudgetDetail"
+      @add-budget="handleViewAllAddBudget"
+    />
   </MainLayout>
 </template>

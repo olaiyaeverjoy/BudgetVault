@@ -1,5 +1,5 @@
 <script setup>
-// import MainLayout from '@/layouts/MainLayout.vue'   // adjust path if needed
+import MainLayout from '@/layouts/MainLayout.vue'   // adjust path if needed
 import PageHeader from '@/components/PageHeader.vue'
 import BasePanel from '@/components/BasePanel.vue'
 
